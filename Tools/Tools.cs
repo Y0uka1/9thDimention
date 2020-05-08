@@ -17,18 +17,29 @@ public class Tools : MonoBehaviour
 	}
 
 
-	public static void MakeTransparent(GameObject gObject, float timeTo)
+	public static IEnumerator MakeTransparent(UnityEngine.UI.Image gObject, float timeToAlpha, bool positive)
 	{
-		var time = 0f;
-		while (time < 1)
+		float alpha = gObject.color.a;
+		Color color = gObject.color;
+		if (positive)
 		{
-			time += Time.deltaTime / timeTo;
-			Material mat = gObject.GetComponent<Renderer>().material;
-			Color color = mat.color;
-			color.a = time;
-			mat.color = color;
+			for(float i=0.0f; i<1.0f; i+= Time.deltaTime / timeToAlpha)
+			{
+				gObject.color = new Color(color.r, color.g, color.b, Mathf.Lerp(alpha, 0, i));
+				yield return null;
+			}
+		}
+		else
+		{
+			for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / timeToAlpha)
+			{
+				gObject.color = new Color(color.r, color.g, color.b, Mathf.Lerp(alpha, 1, i));
+				yield return null;
+			}
 		}
 	}
+
+	
 
 	public static IEnumerator printByLetter(string text, UnityEngine.UI.Text ob)
 	{

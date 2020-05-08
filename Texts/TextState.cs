@@ -2,5 +2,6 @@
 {
     Center,
     Left,
-    Right
+    Right,
+    NULL
 }

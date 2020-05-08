@@ -21,12 +21,13 @@ public class MainManager : MonoBehaviour , IManager
         managers.Add(bgManager = GameObject.FindObjectOfType<BackgroundManager>());
         managers.Add(textManager = GameObject.FindObjectOfType<TextManager>());
         scene1Text=GetComponent<Scene1Text>();
-        foreach(var i in managers)
+        scene1Text.Initialize();
+        foreach (var i in managers)
         {
             i.Initialize();
         }
 
-        scene1Text.Initialize();
+       
        
     }
 }

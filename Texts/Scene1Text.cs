@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Scene1Text : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Scene1Text : MonoBehaviour
 
     public void Initialize()
     {
+        index = 0;
         ReplicaList = new List<Name_ReplicaStruct>() {
             new Name_ReplicaStruct(CharactersName.StorryTeller, "Мы расскажем вам легенду об одном юноше по имени Хальфсен. Ему предстоит очень важная миссия - спасти народы девяти миров." +
             " Не мало препятствий будет на его пути, но мы надеемся, что он справится.", TextState.Center),
@@ -25,6 +27,17 @@ public class Scene1Text : MonoBehaviour
 
     public  Name_ReplicaStruct GetReplica()
     {
-        return ReplicaList[index];
+        Name_ReplicaStruct result;
+        try
+        {
+            
+            result = ReplicaList[index];
+           
+        }catch (ArgumentOutOfRangeException)
+        {
+            return new Name_ReplicaStruct(CharactersName.StorryTeller, "В коде произошло некоторое дерьмо. Скорее всего закончились реплики\n Error: ArgumentOutOfRangeException", TextState.Center);
+        }
+       
+        return result;
     }
 }
