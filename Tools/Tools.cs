@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tools : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class Tools : MonoBehaviour
 	}
 
 
-	public static IEnumerator MakeTransparent(UnityEngine.UI.Image gObject, float timeToAlpha, bool positive)
+	public static IEnumerator MakeTransparent(Image gObject, float timeToAlpha, bool positive)
 	{
 		float alpha = gObject.color.a;
 		Color color = gObject.color;
@@ -41,15 +42,25 @@ public class Tools : MonoBehaviour
 
 	
 
-	public static IEnumerator printByLetter(string text, UnityEngine.UI.Text ob)
+	public static IEnumerator printByLetter(string text, Text ob)
 	{
+		//yield return MainManager.textManager.printCouroutine;
 		MainManager.textManager.isTyping = true;
 		ob.text = "";
 		foreach (char c in text)
 		{
-			ob.text += c;
-			yield return new WaitForFixedUpdate();
+			if (!MainManager.textManager.skipTyping)
+			{
+				ob.text += c;
+				yield return new WaitForFixedUpdate();
+			}
+			else
+				break;
 		}
+		yield return new WaitForFixedUpdate();
+		MainManager.textManager.replicaText.text = MainManager.scene1Text.GetReplica().replica;
+		MainManager.textManager.skipTyping = false;
 		MainManager.textManager.isTyping = false;
 	}
+
 }

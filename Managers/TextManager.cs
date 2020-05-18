@@ -14,23 +14,47 @@ public class TextManager : MonoBehaviour, IManager
     TextState lastState;
 
     public bool isTyping=false;
+    public bool skipTyping = false;
     public Coroutine printCouroutine;
 
-    Vector3 centerPos = Vector3.zero;
-    Vector3 rightPos = new Vector3(160, -715, 0);
-    Vector3 leftPos = new Vector3(-160, -715, 0);
+    Vector3 centerPos;
+    Vector3 rightPos;
+    Vector3 leftPos;
     Vector3 namePos = new Vector3(-195, 200, 0);
     public void Initialize()
     {
+       // this.hideFlags = HideFlags.DontSave;
+        centerPos = GameObject.FindGameObjectWithTag("center").GetComponent<RectTransform>().position;
+        rightPos = GameObject.FindGameObjectWithTag("right").GetComponent<RectTransform>().position;
+        leftPos = GameObject.FindGameObjectWithTag("left").GetComponent<RectTransform>().position;
+        
         textPanel = GetComponentInChildren<Image>();
         charName = textPanel.transform.GetChild(1).GetComponent<Text>();
-        replicaText = textPanel.transform.GetChild(0).GetComponent<Text>();      
+        replicaText = textPanel.transform.GetChild(0).GetComponent<Text>();
+        if (MainManager.biggerText == true)
+        {
+            replicaText.fontSize = 30;
+            charName.fontSize = 30;
+        }
+        else
+        {
+            replicaText.fontSize = 25;
+            charName.fontSize = 25;
+        }
         TapSpace.OnScreenTappedEvent += OnTextChanged;
         lastState = TextState.NULL;
-        Name_ReplicaStruct temp = MainManager.scene1Text.GetReplica();       
-        StartCoroutine(ShowText(temp));
-      
+        
+        status = ManagerStatus.Online;
+        
+
     }
+
+    public void OnLevelLoad()
+    {
+        Name_ReplicaStruct temp = MainManager.scene1Text.GetReplica();
+        StartCoroutine(ShowText(temp));
+    }
+
 
     public IEnumerator ShowText(Name_ReplicaStruct text)
     {
@@ -43,16 +67,16 @@ public class TextManager : MonoBehaviour, IManager
                 case TextState.Center:
                     {
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-center");
-                        textPanel.rectTransform.anchoredPosition = centerPos;
+                        textPanel.rectTransform.position = centerPos;
                         replicaText.rectTransform.sizeDelta = new Vector2(665, 455);
-                        replicaText.rectTransform.anchoredPosition=centerPos;
+                        replicaText.rectTransform.anchoredPosition = Vector3.zero;
                         break;
                     }
 
                 case TextState.Left:
                     {
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-left");
-                        textPanel.rectTransform.anchoredPosition = leftPos;
+                        textPanel.rectTransform.position = leftPos;
                         charName.rectTransform.anchoredPosition = namePos;
                         replicaText.rectTransform.sizeDelta = new Vector2(675, 325);
                         replicaText.rectTransform.anchoredPosition = new Vector3(-2,-40,0);
@@ -61,7 +85,7 @@ public class TextManager : MonoBehaviour, IManager
                 case TextState.Right:
                     {
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-right");
-                        textPanel.rectTransform.anchoredPosition = rightPos;
+                        textPanel.rectTransform.position = rightPos;
                         charName.rectTransform.anchoredPosition = new Vector3(-namePos.x, namePos.y, namePos.z);
                         replicaText.rectTransform.sizeDelta = new Vector2(675, 325);
                         replicaText.rectTransform.anchoredPosition = new Vector3(-2, -40, 0);

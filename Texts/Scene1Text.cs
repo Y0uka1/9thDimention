@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Scene1Text : MonoBehaviour
+public class Scene1Text : MonoBehaviour, IManager
 {
+    public ManagerStatus status { get; set; } = ManagerStatus.Offline;
     public  List<Name_ReplicaStruct> ReplicaList;
-    public   int index;
+  [SerializeField]  public   int index;
 
 
     public void Initialize()
@@ -23,6 +24,8 @@ public class Scene1Text : MonoBehaviour
             new Name_ReplicaStruct(CharactersName.Rungerd,  "Да, и будешь хранить его столько, сколько понадобится. Ты понял меня, Ноа?.", TextState.Right), //Unknow
             new Name_ReplicaStruct(CharactersName.Noa, "Я...", TextState.Left)
         };
+
+        status = ManagerStatus.Online;
     }
 
     public  Name_ReplicaStruct GetReplica()

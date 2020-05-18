@@ -3,5 +3,7 @@
     Center,
     Left,
     Right,
+    Special,
     NULL
+    
 }

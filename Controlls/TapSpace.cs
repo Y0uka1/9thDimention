@@ -17,9 +17,9 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
         }
         else
         {
-            StopCoroutine(MainManager.textManager.printCouroutine);
-            MainManager.textManager.replicaText.text = MainManager.scene1Text.GetReplica().replica;
-            MainManager.textManager.isTyping = false;
+            MainManager.textManager.skipTyping = true;
+            
+            //MainManager.textManager.isTyping = false;
         }
     }
 }
