@@ -5,39 +5,56 @@ using UnityEngine;
 public class WardrobeIDDictionary
 {
     public struct SpriteDictionary{
-        public int id;
+        
         public string path;
+        public string name;
 
-        public SpriteDictionary(int id, string path)
+        public SpriteDictionary(string path, string name)
         {
-            this.id = id;
+            this.name = name;
             this.path = path;
         }
     }
 
-    public static List<SpriteDictionary> dictionary = new List<SpriteDictionary>()
+    public static List<SpriteDictionary> haircutDictionary = new List<SpriteDictionary>()
     {
-        new SpriteDictionary(0,"Wardrobe/Haircut/Hair_01_Brown"),
-        new SpriteDictionary(1,"Wardrobe/Haircut/Hair_01_Gray"),
-        new SpriteDictionary(2,"Wardrobe/Haircut/Hair_02_Black"),
-        new SpriteDictionary(3,"Wardrobe/Haircut/Hair_02_Brown"),
-        new SpriteDictionary(4,"Wardrobe/Haircut/Hair_03_Black"),
-        new SpriteDictionary(5,"Wardrobe/Haircut/Hair_03_Light"),
-        new SpriteDictionary(99, "Wardrobe/Outfit"),
+            new WardrobeIDDictionary.SpriteDictionary("Wardrobe/Haircut/Haircut_01_Black","Тёмные короткие волосы"),
+            new WardrobeIDDictionary.SpriteDictionary( "Wardrobe/Haircut/Haircut_01_Red","Рыжие короткие волосы"),
+            new WardrobeIDDictionary.SpriteDictionary( "Wardrobe/Haircut/Haircut_01_Ash","Пепельные короткие волосы"),
+            new WardrobeIDDictionary.SpriteDictionary( "Wardrobe/Haircut/Haircut_01_Gray","Русые короткие волосы"),
     };
 
-    public  static string GetPathByID(int id)
+    public static List<SpriteDictionary> outfitDictionary = new List<SpriteDictionary>()
     {
-        foreach(var i in dictionary)
+        new SpriteDictionary("Wardrobe/Outfit/outfit_1","Классический наряд"),
+        new SpriteDictionary("Wardrobe/Outfit/outfit_2","Повседневный наряд"),
+    };
+
+    public  static string GetPathByName(string name, WardrobeItemTypeEnum type)
+    {
+        List<SpriteDictionary> tempList = new List<SpriteDictionary>();
+        
+        if (type == WardrobeItemTypeEnum.Haircut)
         {
-            if (i.id == id)
-                return i.path;
+            tempList = haircutDictionary;
+            
+        }else if (type==WardrobeItemTypeEnum.Outfit)
+        {
+            tempList = outfitDictionary;
         }
+
+            foreach (var i in tempList)
+            {
+                if (i.name == name)
+                    return i.path;
+            }
         return null;
     }
 
-    public static Sprite GetSpriteByID(int id)
+    public static Sprite GetSpriteByName(string name, WardrobeItemTypeEnum type)
     {
-        return Resources.Load<Sprite>(GetPathByID(id));
+        return Resources.Load<Sprite>(GetPathByName(name,type));
     }
+
+   
 }

@@ -13,15 +13,15 @@ public class WardrobeDataManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public static int curHaircutID = 1;
-    public static int curOutfitID = 99;
+    public static string curHaircutID = "Пепельные короткие волосы";
+    public static string curOutfitID = "Повседневный наряд";
     static List<int> haircutList;
     public static List<int> outfitList;
 
     static string json;
 
-   [SerializeField] int serializeCurHaircut;
-    [SerializeField] int serializeCurOutfit;
+   [SerializeField] string serializeCurHaircut;
+    [SerializeField] string serializeCurOutfit;
     WardrobeDataManager()
     {
         serializeCurHaircut = curHaircutID;

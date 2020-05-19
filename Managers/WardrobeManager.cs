@@ -7,10 +7,13 @@ using UnityEngine.UI;
 
 public class WardrobeManager : ScriptableObject
 {
-    public GameObject listContent;
+    public Text listContent;
     public  Image haircut;
     public  Image outfit;
-     float quarter;
+    float quarter;
+    public int listIndex;
+    public List<WardrobeIDDictionary.SpriteDictionary> list;
+    WardrobeItemTypeEnum listType = WardrobeItemTypeEnum.Haircut;
     // [SerializeField] public static Sprite haircutSprite;
     // [SerializeField] public static Sprite outfitSprite;
     //public ManagerStatus status { get; set; } = ManagerStatus.Offline;
@@ -18,68 +21,105 @@ public class WardrobeManager : ScriptableObject
 
     public void Initialize()
     {
-        listContent = GameObject.FindGameObjectWithTag("ListContent");
+        listContent = GameObject.FindGameObjectWithTag("ListContent").GetComponent<Text>();
+
         haircut = GameObject.Find("CurrentHaircut").GetComponent<Image>();
         outfit = GameObject.Find("CurrentOutfit").GetComponent<Image>();
-
+        listIndex = 0;
+        list = new List<WardrobeIDDictionary.SpriteDictionary>();
         
-
-        //float quarter = listContent.transform.parent.parent.GetComponent<RectTransform>().rect.width / 3;
-         quarter = Screen.width / 4;
+        LoadFromSave();
+        listIndex = list.FindIndex(item => item.name == WardrobeDataManager.curHaircutID);
+        listContent.text = WardrobeDataManager.curHaircutID;
+         //float quarter = listContent.transform.parent.parent.GetComponent<RectTransform>().rect.width / 3;
+         //  quarter = Screen.width / 4;
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        //RectTransform view = listContent.transform.parent.parent.GetComponent<RectTransform>();
-        //float temp = Screen.width/3;
-        //view.sizeDelta = new Vector2(0,quarter+20);
+       // RectTransform view = listContent.transform.parent.parent.GetComponent<RectTransform>();
+       // float temp = Screen.height /5;
+       // view.sizeDelta = new Vector2(0,temp);
+       // view.anchoredPosition = new Vector2(0,temp/2);
         //Vector2 dynamicCellSize = new Vector2(quarter, quarter);
-        HorizontalLayoutGroup layout = listContent.GetComponent<HorizontalLayoutGroup>();
+      //  HorizontalLayoutGroup layout = listContent.GetComponent<HorizontalLayoutGroup>();
         //layout.
         //layout.cellSize = dynamicCellSize;
-        layout.spacing = quarter/4;
+       // layout.spacing = quarter/4;
 
-      /*  if (haircutSprite == null) {
-            Debug.Log("H Empty");
-            haircutSprite = Resources.Load<Sprite>("Wardrobe/Haircut/Hair_01_Brown");
-        }   
-            haircut.sprite = haircutSprite;
+      
+    }
 
-        if (outfitSprite == null) {
-            Debug.Log("O Empty");
-            outfitSprite = Resources.Load<Sprite>("Wardrobe/Outfit");
-        }
 
-        haircut.sprite = haircutSprite;
-        outfit.sprite = outfitSprite;*/
+    void LoadFromSave()
+    {
+        list = WardrobeIDDictionary.haircutDictionary;
+        haircut.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curHaircutID, WardrobeItemTypeEnum.Haircut);
+        outfit.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curOutfitID,WardrobeItemTypeEnum.Outfit);
+    }
+
+
+    public void ChangeIten(bool next)
+    {
+        if (next)
+            listIndex++;
+        else
+            listIndex--;
+
+        if (listIndex < 0)
+            listIndex = list.Count - 1;
+        else if (listIndex >= list.Count)
+            listIndex = 0;
+
+        ItemChange();
+    }
+
+    private void ItemChange()
+    {
+        listContent.text = list[listIndex].name;
+        if (listType == WardrobeItemTypeEnum.Haircut)
+            haircut.sprite = Resources.Load<Sprite>(list[listIndex].path);
+        else //(listType == WardrobeItemTypeEnum.Outfit)
+            outfit.sprite = Resources.Load<Sprite>(list[listIndex].path);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         if (scene.buildIndex==2)
         {
-           haircut.sprite = WardrobeIDDictionary.GetSpriteByID(WardrobeDataManager.curHaircutID);
-           outfit.sprite = WardrobeIDDictionary.GetSpriteByID(WardrobeDataManager.curOutfitID);
+           haircut.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curHaircutID, WardrobeItemTypeEnum.Haircut);
+           outfit.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curOutfitID,WardrobeItemTypeEnum.Outfit);
         }
     }
 
-    public void ChangeList(int count)
+   public void ChangeList(WardrobeItemTypeEnum type)
     {
-        foreach (Transform i in listContent.transform)
-        {
-            GameObject.Destroy(i.gameObject);
-        }
-        listContent.transform.DetachChildren();
-        for (int i=0;i<count;i++)
-        {
-            GameObject temp = Instantiate(Resources.Load<GameObject>("Wardrobe/ItemBGPrefab"));
-            temp.GetComponent<RectTransform>().sizeDelta = new Vector2(quarter, quarter);
-            temp.transform.parent = listContent.transform;
-        }
+        listType = type;
         
+        switch (type)
+        {
+            case WardrobeItemTypeEnum.Haircut:
+                {
+                    list = WardrobeIDDictionary.haircutDictionary;
+                    listIndex = list.FindIndex(item => item.name == WardrobeDataManager.curHaircutID);
+                    break;
+                }
+            case WardrobeItemTypeEnum.Outfit:
+                {
+                    list = WardrobeIDDictionary.outfitDictionary;
+                    listIndex = list.FindIndex(item => item.name == WardrobeDataManager.curOutfitID);
+                    break;
+                }
+            case WardrobeItemTypeEnum.Item:
+                {
+                    list = WardrobeIDDictionary.haircutDictionary;
+                    break;
+                }
+        }
+        ItemChange();
     }
 
-    public void ConcreteChangeList(List<WardrobeIDDictionary.SpriteDictionary> colors, WardrobeItemTypeEnum type)
+   /* public void ConcreteChangeList(List<WardrobeIDDictionary.SpriteDictionary> colors, WardrobeItemTypeEnum type)
     {
-        ChangeList(colors.Count);
+        
         int index = 0;
         foreach (Transform i in listContent.transform)
         {
@@ -90,5 +130,5 @@ public class WardrobeManager : ScriptableObject
             index++;
         }
        
-    }
+    }*/
 }

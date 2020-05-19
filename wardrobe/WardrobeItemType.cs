@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class WardrobeItemType
 {
-    public static List<Type> GetItemList(WardrobeItemTypeEnum wbItemType)
+   /* public static List<Type> GetItemList(WardrobeItemTypeEnum wbItemType)
     {
         switch (wbItemType){
 
@@ -34,5 +34,5 @@ public class WardrobeItemType
                     return null;
                 }
         }
-    }
+    }*/
 }

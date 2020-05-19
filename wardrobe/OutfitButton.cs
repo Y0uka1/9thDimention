@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
-public class HaircutButton : MonoBehaviour
+public class OutfitButton : MonoBehaviour
 {
     Button button;
     private void Start()
@@ -17,7 +16,6 @@ public class HaircutButton : MonoBehaviour
 
     public void OnPointerDown()
     {
-        MainManager.wardrobeManager.ChangeList(WardrobeItemTypeEnum.Haircut);
+        MainManager.wardrobeManager.ChangeList(WardrobeItemTypeEnum.Outfit);
     }
-
 }

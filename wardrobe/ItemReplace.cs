@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemReplace : MonoBehaviour, IPointerDownHandler
+public class ItemReplace : MonoBehaviour //, IPointerDownHandler
 {
     public WardrobeItemTypeEnum type;
     public int id;
@@ -13,7 +13,7 @@ public class ItemReplace : MonoBehaviour, IPointerDownHandler
         this.id = id;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    /*public void OnPointerDown(PointerEventData eventData)
     {
         switch (type)
         {
@@ -43,5 +43,5 @@ public class ItemReplace : MonoBehaviour, IPointerDownHandler
                 }
         }
        
-    }
+    }*/
 }

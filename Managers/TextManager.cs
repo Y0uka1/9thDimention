@@ -31,7 +31,7 @@ public class TextManager : MonoBehaviour, IManager
         textPanel = GetComponentInChildren<Image>();
         charName = textPanel.transform.GetChild(1).GetComponent<Text>();
         replicaText = textPanel.transform.GetChild(0).GetComponent<Text>();
-        if (MainManager.biggerText == true)
+        /*if (MainManager.biggerText == true)
         {
             replicaText.fontSize = 30;
             charName.fontSize = 30;
@@ -40,7 +40,7 @@ public class TextManager : MonoBehaviour, IManager
         {
             replicaText.fontSize = 25;
             charName.fontSize = 25;
-        }
+        }*/
         TapSpace.OnScreenTappedEvent += OnTextChanged;
         lastState = TextState.NULL;
         
@@ -68,7 +68,7 @@ public class TextManager : MonoBehaviour, IManager
                     {
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-center");
                         textPanel.rectTransform.position = centerPos;
-                        replicaText.rectTransform.sizeDelta = new Vector2(665, 455);
+                        replicaText.rectTransform.sizeDelta = new Vector2(625, 455);
                         replicaText.rectTransform.anchoredPosition = Vector3.zero;
                         break;
                     }
@@ -78,7 +78,7 @@ public class TextManager : MonoBehaviour, IManager
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-left");
                         textPanel.rectTransform.position = leftPos;
                         charName.rectTransform.anchoredPosition = namePos;
-                        replicaText.rectTransform.sizeDelta = new Vector2(675, 325);
+                        replicaText.rectTransform.sizeDelta = new Vector2(625, 325);
                         replicaText.rectTransform.anchoredPosition = new Vector3(-2,-40,0);
                         break;
                     }
@@ -87,7 +87,7 @@ public class TextManager : MonoBehaviour, IManager
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-right");
                         textPanel.rectTransform.position = rightPos;
                         charName.rectTransform.anchoredPosition = new Vector3(-namePos.x, namePos.y, namePos.z);
-                        replicaText.rectTransform.sizeDelta = new Vector2(675, 325);
+                        replicaText.rectTransform.sizeDelta = new Vector2(625, 325);
                         replicaText.rectTransform.anchoredPosition = new Vector3(-2, -40, 0);
                         break;
                     }
