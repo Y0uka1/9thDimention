@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class MainManager : MonoBehaviour , IManager
+public class MainManager : ScriptableObject , IManager
 {
     public ManagerStatus status { get; set; } = ManagerStatus.Offline;
 
@@ -16,10 +17,11 @@ public class MainManager : MonoBehaviour , IManager
     public void Initialize()
     {
         List<IManager> managers = new List<IManager>();
-        managers.Add(scene1Text = GetComponent<Scene1Text>());
+        managers.Add(scene1Text = CreateInstance(typeof(Scene1Text)) as Scene1Text/*= GetComponent<Scene1Text>()*/);
         managers.Add(bgManager = GameObject.FindObjectOfType<BackgroundManager>());
         managers.Add(textManager = GameObject.FindObjectOfType<TextManager>());
-        wardrobeManager = GetComponent<WardrobeManager>();
+        //wardrobeManager = GameObject.FindObjectOfType<WardrobeManager>();
+        wardrobeManager = CreateInstance(typeof(WardrobeManager)) as WardrobeManager;
         loadManager = FindObjectOfType<LoadManager>();
         //scene1Text.Initialize();
         foreach (var i in managers)
@@ -28,13 +30,16 @@ public class MainManager : MonoBehaviour , IManager
         }
         bgManager.ChangeBackground(bgManager.backgroundsList[0]);
 
+        SceneManager.sceneLoaded+=OnLevelLoaded;
+
         status = ManagerStatus.Online;
        // Debug.Log(Application.persistentDataPath);
+
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnLevelLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (level == 2)
+        if (scene.buildIndex == 2)
             wardrobeManager.Initialize();
         else
         {

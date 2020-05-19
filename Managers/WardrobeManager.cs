@@ -5,16 +5,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class WardrobeManager : MonoBehaviour
+public class WardrobeManager : ScriptableObject
 {
     public GameObject listContent;
     public  Image haircut;
     public  Image outfit;
+     float quarter;
     // [SerializeField] public static Sprite haircutSprite;
     // [SerializeField] public static Sprite outfitSprite;
     //public ManagerStatus status { get; set; } = ManagerStatus.Offline;
 
-   
 
     public void Initialize()
     {
@@ -22,11 +22,20 @@ public class WardrobeManager : MonoBehaviour
         haircut = GameObject.Find("CurrentHaircut").GetComponent<Image>();
         outfit = GameObject.Find("CurrentOutfit").GetComponent<Image>();
 
+        
+
+        //float quarter = listContent.transform.parent.parent.GetComponent<RectTransform>().rect.width / 3;
+         quarter = Screen.width / 4;
         SceneManager.sceneLoaded += OnSceneLoaded;
-        Vector2 dynamicCellSize = new Vector2(Screen.width / 4, Screen.width / 4);
-        GridLayoutGroup layout = listContent.GetComponent<GridLayoutGroup>();
-        layout.cellSize = dynamicCellSize;
-        layout.spacing = dynamicCellSize/4;
+
+        //RectTransform view = listContent.transform.parent.parent.GetComponent<RectTransform>();
+        //float temp = Screen.width/3;
+        //view.sizeDelta = new Vector2(0,quarter+20);
+        //Vector2 dynamicCellSize = new Vector2(quarter, quarter);
+        HorizontalLayoutGroup layout = listContent.GetComponent<HorizontalLayoutGroup>();
+        //layout.
+        //layout.cellSize = dynamicCellSize;
+        layout.spacing = quarter/4;
 
       /*  if (haircutSprite == null) {
             Debug.Log("H Empty");
@@ -47,30 +56,32 @@ public class WardrobeManager : MonoBehaviour
     {
         if (scene.buildIndex==2)
         {
-            MainManager.wardrobeManager.haircut.sprite = WardrobeIDDictionary.GetSpriteByID(WardrobeDataManager.curHaircutID);
-            MainManager.wardrobeManager.outfit.sprite = WardrobeIDDictionary.GetSpriteByID(WardrobeDataManager.curOutfitID);
+           haircut.sprite = WardrobeIDDictionary.GetSpriteByID(WardrobeDataManager.curHaircutID);
+           outfit.sprite = WardrobeIDDictionary.GetSpriteByID(WardrobeDataManager.curOutfitID);
         }
     }
 
     public void ChangeList(int count)
     {
-        foreach (Transform i in MainManager.wardrobeManager.listContent.transform)
+        foreach (Transform i in listContent.transform)
         {
             GameObject.Destroy(i.gameObject);
         }
-        MainManager.wardrobeManager.listContent.transform.DetachChildren();
+        listContent.transform.DetachChildren();
         for (int i=0;i<count;i++)
         {
             GameObject temp = Instantiate(Resources.Load<GameObject>("Wardrobe/ItemBGPrefab"));
-            temp.transform.parent = MainManager.wardrobeManager.listContent.transform;
+            temp.GetComponent<RectTransform>().sizeDelta = new Vector2(quarter, quarter);
+            temp.transform.parent = listContent.transform;
         }
+        
     }
 
     public void ConcreteChangeList(List<WardrobeIDDictionary.SpriteDictionary> colors, WardrobeItemTypeEnum type)
     {
-        MainManager.wardrobeManager.ChangeList(colors.Count);
+        ChangeList(colors.Count);
         int index = 0;
-        foreach (Transform i in MainManager.wardrobeManager.listContent.transform)
+        foreach (Transform i in listContent.transform)
         {
             i.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(colors[index].path);
             ItemReplace temp = i.gameObject.AddComponent<ItemReplace>();
@@ -78,5 +89,6 @@ public class WardrobeManager : MonoBehaviour
             temp.id = colors[index].id;
             index++;
         }
+       
     }
 }

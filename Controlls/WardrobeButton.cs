@@ -15,6 +15,7 @@ public class WardrobeButton : MonoBehaviour
 
     void OnClick()
     {
+        button.interactable = false;
         MainManager.loadManager.LoadLevelById(2);
     }
 

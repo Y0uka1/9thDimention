@@ -20,6 +20,10 @@ public class Haircut_01 : ACHaircut
         {
             new WardrobeIDDictionary.SpriteDictionary(0,"Wardrobe/Haircut/Hair_01_Brown"),
             new WardrobeIDDictionary.SpriteDictionary(1, "Wardrobe/Haircut/Hair_01_Gray"),
+            new WardrobeIDDictionary.SpriteDictionary(1, "Wardrobe/Haircut/Hair_01_Gray"),
+            new WardrobeIDDictionary.SpriteDictionary(1, "Wardrobe/Haircut/Hair_01_Gray"),
+            new WardrobeIDDictionary.SpriteDictionary(1, "Wardrobe/Haircut/Hair_01_Gray"),
+            new WardrobeIDDictionary.SpriteDictionary(1, "Wardrobe/Haircut/Hair_01_Gray"),
         };
     }
 

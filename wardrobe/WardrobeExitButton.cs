@@ -15,7 +15,8 @@ public class WardrobeExitButton : MonoBehaviour
 
     void OnClick()
     {
-      MainManager.loadManager.LoadLevelById(1);
+        button.interactable = false;
+        MainManager.loadManager.LoadLevelById(1);
     }
 
 }

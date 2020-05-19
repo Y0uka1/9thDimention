@@ -25,8 +25,10 @@ public class LoadManager : MonoBehaviour
 
         while (!loadLevel.isDone)
             yield return null;
-        MainManager mainManager = Instantiate(Resources.Load<GameObject>("Manager")).GetComponent<MainManager>();
-        DontDestroyOnLoad(mainManager.gameObject);
+
+        MainManager mainManager = ScriptableObject.CreateInstance(typeof(MainManager)) as MainManager;
+        //MainManager mainManager = Instantiate(Resources.Load<GameObject>("Manager")).GetComponent<MainManager>();
+        //DontDestroyOnLoad(mainManager.gameObject);
         mainManager.Initialize();
         while (mainManager.status != ManagerStatus.Online)
         {

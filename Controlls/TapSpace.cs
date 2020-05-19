@@ -9,17 +9,24 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
     public static event OnScreenTapped OnScreenTappedEvent;
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Tapped");
-        if (!MainManager.textManager.isTyping)
+        if (MainManager.textManager.gameObject != null)
         {
-            MainManager.scene1Text.index++;
-            OnScreenTappedEvent.Invoke();
+            Debug.Log("Tapped");
+            if (!MainManager.textManager.isTyping)
+            {
+                MainManager.scene1Text.index++;
+                OnScreenTappedEvent.Invoke();
+            }
+            else
+            {
+                MainManager.textManager.skipTyping = true;
+
+                //MainManager.textManager.isTyping = false;
+            }
         }
         else
         {
-            MainManager.textManager.skipTyping = true;
-            
-            //MainManager.textManager.isTyping = false;
+            Debug.Log("NULL");
         }
     }
 }

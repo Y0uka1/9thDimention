@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Scene1Text : MonoBehaviour, IManager
+public class Scene1Text : ScriptableObject, IManager
 {
     public ManagerStatus status { get; set; } = ManagerStatus.Offline;
     public  List<Name_ReplicaStruct> ReplicaList;

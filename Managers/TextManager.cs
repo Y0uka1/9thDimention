@@ -109,4 +109,9 @@ public class TextManager : MonoBehaviour, IManager
     {
        StartCoroutine(ShowText(MainManager.scene1Text.GetReplica()));
     }
+
+    private void OnDestroy()
+    {
+        TapSpace.OnScreenTappedEvent -=OnTextChanged;
+    }
 }
