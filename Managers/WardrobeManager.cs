@@ -52,6 +52,7 @@ public class WardrobeManager : ScriptableObject
     void LoadFromSave()
     {
         list = WardrobeIDDictionary.haircutDictionary;
+        listType = WardrobeItemTypeEnum.Haircut;
         haircut.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curHaircutID, WardrobeItemTypeEnum.Haircut);
         outfit.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curOutfitID,WardrobeItemTypeEnum.Outfit);
     }

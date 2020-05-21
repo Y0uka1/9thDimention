@@ -17,12 +17,7 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
                 MainManager.scene1Text.index++;
                 OnScreenTappedEvent.Invoke();
             }
-            else
-            {
-                MainManager.textManager.skipTyping = true;
-
-                //MainManager.textManager.isTyping = false;
-            }
+            
         }
         else
         {

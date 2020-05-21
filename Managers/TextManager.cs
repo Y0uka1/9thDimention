@@ -68,7 +68,7 @@ public class TextManager : MonoBehaviour, IManager
                     {
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-center");
                         textPanel.rectTransform.position = centerPos;
-                        replicaText.rectTransform.sizeDelta = new Vector2(625, 455);
+                        replicaText.rectTransform.sizeDelta = new Vector2(625, 435);
                         replicaText.rectTransform.anchoredPosition = Vector3.zero;
                         break;
                     }
@@ -78,7 +78,7 @@ public class TextManager : MonoBehaviour, IManager
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-left");
                         textPanel.rectTransform.position = leftPos;
                         charName.rectTransform.anchoredPosition = namePos;
-                        replicaText.rectTransform.sizeDelta = new Vector2(625, 325);
+                        replicaText.rectTransform.sizeDelta = new Vector2(625, 305);
                         replicaText.rectTransform.anchoredPosition = new Vector3(-2,-40,0);
                         break;
                     }
@@ -87,7 +87,7 @@ public class TextManager : MonoBehaviour, IManager
                         textPanel.sprite = Resources.Load<Sprite>("gui/text-right");
                         textPanel.rectTransform.position = rightPos;
                         charName.rectTransform.anchoredPosition = new Vector3(-namePos.x, namePos.y, namePos.z);
-                        replicaText.rectTransform.sizeDelta = new Vector2(625, 325);
+                        replicaText.rectTransform.sizeDelta = new Vector2(625, 305);
                         replicaText.rectTransform.anchoredPosition = new Vector3(-2, -40, 0);
                         break;
                     }

@@ -47,15 +47,13 @@ public class Tools : MonoBehaviour
 		//yield return MainManager.textManager.printCouroutine;
 		MainManager.textManager.isTyping = true;
 		ob.text = "";
-		foreach (char c in text)
+		string[] textSplited = text.Split(' ');
+		foreach (string c in textSplited)
 		{
-			if (!MainManager.textManager.skipTyping)
-			{
+			
 				ob.text += c;
-				yield return new WaitForFixedUpdate();
-			}
-			else
-				break;
+			ob.text += ' ';
+			yield return new WaitForSeconds(0.025f);
 		}
 		yield return new WaitForFixedUpdate();
 		MainManager.textManager.replicaText.text = MainManager.scene1Text.GetReplica().replica;

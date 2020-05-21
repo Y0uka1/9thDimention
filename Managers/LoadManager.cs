@@ -8,6 +8,7 @@ public class LoadManager : MonoBehaviour
 {
     Image loadScreen;
     AsyncOperation loadLevel;
+    public bool isLoading;
     private void Start()
     {
         DontDestroyOnLoad(GameObject.Find("Canvas"));
@@ -21,7 +22,8 @@ public class LoadManager : MonoBehaviour
 
     IEnumerator FirstLoadFunc()
     {
-       loadLevel = SceneManager.LoadSceneAsync("MainScene");
+        isLoading = true;
+        loadLevel = SceneManager.LoadSceneAsync("MainScene");
 
         while (!loadLevel.isDone)
             yield return null;
@@ -40,12 +42,14 @@ public class LoadManager : MonoBehaviour
         yield return  StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, true));
 
         loadScreen.enabled = false;
-
+        loadScreen.color = new Color(0,0,0,0);
+        isLoading = false;
         MainManager.textManager.OnLevelLoad();
     }
 
    public IEnumerator LoadFunc(int leveIndex)
     {
+        isLoading = true;
         loadScreen.enabled = true;
         loadLevel = SceneManager.LoadSceneAsync(leveIndex);
         loadLevel.allowSceneActivation = false;
@@ -60,7 +64,7 @@ public class LoadManager : MonoBehaviour
        
         yield return StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, true));
         loadScreen.enabled = false;
-        
+        isLoading = false;
     }
 
     public void LoadLevelById(int id)
