@@ -1,15 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TextManager : MonoBehaviour, IManager
 {
+    delegate void ScriptEvent();
+    ScriptEvent scriptEvent;
+
     public ManagerStatus status { get; set; } = ManagerStatus.Offline;
     string curText;
-    Image textPanel;
-    Text charName;
+    public Image textPanel;
+    public Text charName;
     public Text replicaText;
+
 
     TextState lastState;
 
@@ -43,7 +48,6 @@ public class TextManager : MonoBehaviour, IManager
         }*/
         TapSpace.OnScreenTappedEvent += OnTextChanged;
         lastState = TextState.NULL;
-        
         status = ManagerStatus.Online;
         
 
@@ -58,10 +62,11 @@ public class TextManager : MonoBehaviour, IManager
 
     public IEnumerator ShowText(Name_ReplicaStruct text)
     {
+        
         if (lastState != text.state)
         {
            yield return StartCoroutine(Tools.MakeTransparent(textPanel, 0.5f,true));
-
+            
             switch (text.state)
             {
                 case TextState.Center:
@@ -91,18 +96,32 @@ public class TextManager : MonoBehaviour, IManager
                         replicaText.rectTransform.anchoredPosition = new Vector3(-2, -40, 0);
                         break;
                     }
+                case TextState.Special:
+                    {
+                        text.ScriptEvent();
+                        yield break;
+                    }
+               
             }
-
-            StartCoroutine(Tools.MakeTransparent(textPanel, 0.5f, false));
+            if (text.state != TextState.Special && text.state != TextState.NULL)
+                StartCoroutine(Tools.MakeTransparent(textPanel, 0.5f, false));
         }
-        
+
 
         //TODO Animations
-        
 
-        charName.text = text.NameToString(text.name);
-        printCouroutine = StartCoroutine(Tools.printByLetter(text.replica, replicaText));
+      
+        
+            charName.text = text.NameToString(text.name);
+            printCouroutine = StartCoroutine(Tools.printByLetter(text.replica, replicaText));
+        
     }
+
+    
+
+
+
+    
 
 
     public void OnTextChanged()

@@ -71,4 +71,18 @@ public class LoadManager : MonoBehaviour
     {
         StartCoroutine(LoadFunc(id));
     }
+
+    public IEnumerator Fade()
+    {
+        loadScreen.enabled = true;
+        yield return StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, false));
+
+       
+
+        yield return new WaitForSeconds(1.5f);
+
+        yield return StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, true));
+        loadScreen.enabled = false;
+    }
+
 }
