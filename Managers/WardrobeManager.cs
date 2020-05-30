@@ -21,6 +21,9 @@ public class WardrobeManager : ScriptableObject
 
     public void Initialize()
     {
+       // WardrobeDataManager.DataSave();
+       WardrobeDataManager.DataLoad();
+
         listContent = GameObject.FindGameObjectWithTag("ListContent").GetComponent<Text>();
 
         haircut = GameObject.Find("CurrentHaircut").GetComponent<Image>();
@@ -77,15 +80,22 @@ public class WardrobeManager : ScriptableObject
     {
         listContent.text = list[listIndex].name;
         if (listType == WardrobeItemTypeEnum.Haircut)
+        {
             haircut.sprite = Resources.Load<Sprite>(list[listIndex].path);
+            WardrobeDataManager.curHaircutID = list[listIndex].name;
+        }
         else //(listType == WardrobeItemTypeEnum.Outfit)
+        {
             outfit.sprite = Resources.Load<Sprite>(list[listIndex].path);
+            WardrobeDataManager.curOutfitID = list[listIndex].name;
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         if (scene.buildIndex==2)
         {
+         //   Initialize();
            haircut.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curHaircutID, WardrobeItemTypeEnum.Haircut);
            outfit.sprite = WardrobeIDDictionary.GetSpriteByName(WardrobeDataManager.curOutfitID,WardrobeItemTypeEnum.Outfit);
         }

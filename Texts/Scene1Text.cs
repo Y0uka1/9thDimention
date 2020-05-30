@@ -13,6 +13,7 @@ public class Scene1Text : ScriptableObject, IManager
     public void Initialize()
     {
         events = GameObject.FindObjectOfType(typeof(Chapter1Events)) as Chapter1Events;
+        events.Initialize();
         index = 0;
         ReplicaList = new List<Name_ReplicaStruct>() {
             new Name_ReplicaStruct(CharactersName.StorryTeller, "Мы расскажем вам легенду об одном юноше по имени Хальфсен. Ему предстоит очень важная миссия - спасти народы девяти миров.", TextState.Center,null),
@@ -22,6 +23,14 @@ public class Scene1Text : ScriptableObject, IManager
             new Name_ReplicaStruct(CharactersName.StorryTeller,"", TextState.Special, events.Tutorial1),
 
             new Name_ReplicaStruct(CharactersName.StorryTeller,"",TextState.Special, events.LidlWardrobe),
+
+            new Name_ReplicaStruct(CharactersName.StorryTeller,"", TextState.Special, events.Tutorial2),
+
+             new Name_ReplicaStruct(CharactersName.StorryTeller,"Здесь мы и начнём наш рассказ.", TextState.Center),
+
+              new Name_ReplicaStruct(CharactersName.StorryTeller,"", TextState.Special, events.LoadDream),
+
+               new Name_ReplicaStruct(CharactersName.StorryTeller,"", TextState.Special, events.FlyingCamera),
 
             new Name_ReplicaStruct(CharactersName.Rungerd,"Если то, что ты говоришь – правда..." , TextState.Right,null),                                              //Unknow
             new Name_ReplicaStruct(CharactersName.Noa,"Я видел это своими глазами!", TextState.Left,null),                                                        //Unknow

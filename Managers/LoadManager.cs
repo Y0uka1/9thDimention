@@ -11,7 +11,7 @@ public class LoadManager : MonoBehaviour
     public bool isLoading;
     private void Start()
     {
-        DontDestroyOnLoad(GameObject.Find("Canvas"));
+        DontDestroyOnLoad(GameObject.Find("LoadingCanvas"));
         loadScreen = GameObject.Find("LoadScreen").GetComponent<Image>();
        // DontDestroyOnLoad(loadScreen.gameObject);
         DontDestroyOnLoad(this.gameObject);

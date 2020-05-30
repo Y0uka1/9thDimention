@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class BackgroundManager : MonoBehaviour, IManager
 {
@@ -11,24 +13,39 @@ public class BackgroundManager : MonoBehaviour, IManager
     bool isQHD;
     public RawImage targetTexture;
 
-    public List<string> backgroundsList;
+    public static List<string> backgroundsList;
     public void Initialize()
     {
+        DontDestroyOnLoad(this);
         ListInitialize();
-        bgVideoPlayer = GetComponent<VideoPlayer>();
-        targetTexture = GameObject.FindGameObjectWithTag("Background").GetComponent<RawImage>();
-        if (Screen.height<2000 && Screen.width < 2000)
+        FindVideoAndTexture();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        if (Screen.height < 2000 && Screen.width < 2000)
         {
             isQHD = false;
             MainManager.biggerText = false;
         }
         else
         {
-            isQHD = true;         
+            isQHD = true;
             MainManager.biggerText = true;
         }
         StartCoroutine(PlayVideo());
         status = ManagerStatus.Online;
+    }
+
+    private void FindVideoAndTexture()
+    {
+        try
+        {
+            bgVideoPlayer = GetComponent<VideoPlayer>();
+            targetTexture = GameObject.FindGameObjectWithTag("Background").GetComponent<RawImage>();
+        }
+        catch
+        {
+            Debug.Log("Video And Texture not found");
+        }
+        
     }
 
     public void ChangeBackground(string path)
@@ -58,21 +75,25 @@ public class BackgroundManager : MonoBehaviour, IManager
     {
         backgroundsList = new List<string>()
         {
-            "dream",
+            "prologue",
             "Wardrobe",
-            "prologue"
+            "dream",
         };
     }
 
 
-    public void OnStartAnimation()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-       // MoveTool.MoveToPosition(backgroundAnimated, new Vector3(5.11f, -0.003f, 1f), 0f);
+        FindVideoAndTexture();
+        switch (scene.buildIndex)
+        {
+            case 1:
+                {
+                    
+                    ChangeBackground("prologue");
+                    StartCoroutine(PlayVideo());
+                    break;
+                }
+        }
     }
-
-   /* public void OnLevelWasLoaded(int level)
-    {
-        if (bgVideoPlayer.clip != null)
-            bgVideoPlayer.Play();
-    }*/
 }

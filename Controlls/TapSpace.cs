@@ -24,4 +24,22 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
             Debug.Log("NULL");
         }
     }
+
+    public static void Next()
+    {
+        if (MainManager.textManager.gameObject != null)
+        {
+            Debug.Log("Tapped");
+            if (!MainManager.textManager.isTyping)
+            {
+                MainManager.scene1Text.index++;
+                OnScreenTappedEvent.Invoke();
+            }
+
+        }
+        else
+        {
+            Debug.Log("NULL");
+        }
+    }
 }

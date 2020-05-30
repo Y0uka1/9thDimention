@@ -28,7 +28,7 @@ public class MainManager : ScriptableObject , IManager
         {
             i.Initialize();
         }
-        bgManager.ChangeBackground(bgManager.backgroundsList[0]);
+        bgManager.ChangeBackground(BackgroundManager.backgroundsList[0]);
 
         SceneManager.sceneLoaded+=OnLevelLoaded;
 
