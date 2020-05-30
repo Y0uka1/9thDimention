@@ -19,7 +19,7 @@ public class BackgroundManager : MonoBehaviour, IManager
         DontDestroyOnLoad(this);
         ListInitialize();
         FindVideoAndTexture();
-        SceneManager.sceneLoaded += OnSceneLoaded;
+      //  SceneManager.sceneLoaded += OnSceneLoaded;
         if (Screen.height < 2000 && Screen.width < 2000)
         {
             isQHD = false;
@@ -50,12 +50,14 @@ public class BackgroundManager : MonoBehaviour, IManager
 
     public void ChangeBackground(string path)
     {
+        Debug.Log("Change");
         if (isQHD)
             bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + path + "2K");
         else
             bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + path + "FULLHD");
+        FindVideoAndTexture();
+        StartCoroutine(PlayVideo());
 
-        
     }
 
 
@@ -82,8 +84,9 @@ public class BackgroundManager : MonoBehaviour, IManager
     }
 
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+  /*  private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        Debug.Log("load");
         FindVideoAndTexture();
         switch (scene.buildIndex)
         {
@@ -95,5 +98,5 @@ public class BackgroundManager : MonoBehaviour, IManager
                     break;
                 }
         }
-    }
+    }*/
 }

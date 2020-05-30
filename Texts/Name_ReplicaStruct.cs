@@ -9,12 +9,14 @@ public struct Name_ReplicaStruct
     public string replica;
     public TextState state;
     public Action ScriptEvent;
-    public Name_ReplicaStruct(CharactersName name = CharactersName.StorryTeller, string replica = "", TextState state = TextState.Center, Action sEvent=null)
+    public CharacterEmotions emotion;
+    public Name_ReplicaStruct(CharactersName name = CharactersName.StorryTeller, string replica = "", TextState state = TextState.Center, Action sEvent=null, CharacterEmotions emotion = CharacterEmotions.LightBlue)
     {
         this.name = name;
         this.replica = replica;
         this.state = state;
         this.ScriptEvent = sEvent;
+        this.emotion = emotion;
     }
 
     public string NameToString(CharactersName name)
@@ -23,13 +25,13 @@ public struct Name_ReplicaStruct
         {
             case CharactersName.Noa:
                 return "Ноа";
-
-            case CharactersName.Rungerd:
-                return "Рунгерд";
+            case CharactersName.Volva:
+                return "Вёльва";
             case CharactersName.StorryTeller:
                 return "";
             default:
-                return "Error";
+                return "Незнакомец";
+            
         }
     }
 }

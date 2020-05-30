@@ -38,6 +38,7 @@ public class WardrobeIDDictionary
     {
         new SpriteDictionary("Wardrobe/Outfit/outfit_1","Классический наряд"),
         new SpriteDictionary("Wardrobe/Outfit/outfit_2","Повседневный наряд"),
+        new SpriteDictionary("Wardrobe/Outfit/outfit_3","Небрежный наряд"),
     };
 
     public  static string GetPathByName(string name, WardrobeItemTypeEnum type)

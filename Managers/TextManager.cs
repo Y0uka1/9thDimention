@@ -15,6 +15,7 @@ public class TextManager : MonoBehaviour, IManager
     public Text charName;
     public Text replicaText;
 
+    public Image characterImg;
 
     TextState lastState;
 
@@ -32,7 +33,7 @@ public class TextManager : MonoBehaviour, IManager
         centerPos = GameObject.FindGameObjectWithTag("center").GetComponent<RectTransform>().position;
         rightPos = GameObject.FindGameObjectWithTag("right").GetComponent<RectTransform>().position;
         leftPos = GameObject.FindGameObjectWithTag("left").GetComponent<RectTransform>().position;
-        
+        characterImg = GameObject.Find("Character").GetComponent<Image>(); ;
         textPanel = GetComponentInChildren<Image>();
         charName = textPanel.transform.GetChild(1).GetComponent<Text>();
         replicaText = textPanel.transform.GetChild(0).GetComponent<Text>();
@@ -62,7 +63,15 @@ public class TextManager : MonoBehaviour, IManager
 
     public IEnumerator ShowText(Name_ReplicaStruct text)
     {
-        
+        replicaText.text = "";
+        if (text.name != CharactersName.StorryTeller)
+        {
+            string name = Enum.GetName(typeof(CharactersName), text.name);
+            if (name.Contains("Unknown_"))
+                name = name.Substring(8);
+            characterImg.sprite = Resources.Load<Sprite>($"sprites/{name}/{name}_{Enum.GetName(typeof(CharacterEmotions), text.emotion)}");
+            Debug.Log($"sprites/{Enum.GetName(typeof(CharactersName), text.name)}/{Enum.GetName(typeof(CharactersName), text.name)}_{Enum.GetName(typeof(CharacterEmotions), text.emotion)}");
+        }
         if (lastState != text.state)
         {
            yield return StartCoroutine(Tools.MakeTransparent(textPanel, 0.5f,true));
@@ -107,22 +116,10 @@ public class TextManager : MonoBehaviour, IManager
                 StartCoroutine(Tools.MakeTransparent(textPanel, 0.5f, false));
         }
 
-
-        //TODO Animations
-
-      
-        
             charName.text = text.NameToString(text.name);
             printCouroutine = StartCoroutine(Tools.printByLetter(text.replica, replicaText));
         
     }
-
-    
-
-
-
-    
-
 
     public void OnTextChanged()
     {

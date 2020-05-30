@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum CharactersName { 
     StorryTeller,
-    Rungerd,
-    Noa
+    Volva,
+    Noa,
+    Unknown_Noa,
 }

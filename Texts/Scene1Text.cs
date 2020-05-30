@@ -32,12 +32,12 @@ public class Scene1Text : ScriptableObject, IManager
 
                new Name_ReplicaStruct(CharactersName.StorryTeller,"", TextState.Special, events.FlyingCamera),
 
-            new Name_ReplicaStruct(CharactersName.Rungerd,"Если то, что ты говоришь – правда..." , TextState.Right,null),                                              //Unknow
-            new Name_ReplicaStruct(CharactersName.Noa,"Я видел это своими глазами!", TextState.Left,null),                                                        //Unknow
-            new Name_ReplicaStruct(CharactersName.Rungerd,"Ты отправляешься в Мидгард, чтобы украсть священный свет, соединяющий все миры.", TextState.Right,null), //Unknow
-            new Name_ReplicaStruct(CharactersName.Noa, "Бифрёст?", TextState.Left,null),                                                                            //Unknow
-            new Name_ReplicaStruct(CharactersName.Rungerd,  "Да, и будешь хранить его столько, сколько понадобится. Ты понял меня, Ноа?.", TextState.Right,null), //Unknow
-            new Name_ReplicaStruct(CharactersName.Noa, "Я...", TextState.Left,null)
+            new Name_ReplicaStruct(CharactersName.Volva,"Если то, что ты говоришь – правда..." , TextState.Right,null, CharacterEmotions.Orange),                                              //Unknow
+            new Name_ReplicaStruct(CharactersName.Unknown_Noa,"Я видел это своими глазами!", TextState.Left,null, CharacterEmotions.LightBlue),                                                        //Unknow
+            new Name_ReplicaStruct(CharactersName.Volva,"Ты отправляешься в Мидгард, чтобы украсть священный свет, соединяющий все миры.", TextState.Right,null,CharacterEmotions.LightBlue), //Unknow
+            new Name_ReplicaStruct(CharactersName.Unknown_Noa, "Бифрёст?", TextState.Left,null, CharacterEmotions.Orange),                                                                            //Unknow
+            new Name_ReplicaStruct(CharactersName.Volva,  "Да, и будешь хранить его столько, сколько понадобится. Ты понял меня, Ноа?.", TextState.Right,null,CharacterEmotions.LightBlue), //Unknow
+            new Name_ReplicaStruct(CharactersName.Noa, "Я...", TextState.Left,null, CharacterEmotions.Orange),
         };
 
         status = ManagerStatus.Online;
