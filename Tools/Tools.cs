@@ -20,6 +20,7 @@ public class Tools : MonoBehaviour
 
 	public static IEnumerator MakeTransparent(Image gObject, float timeToAlpha, bool positive)
 	{
+		MainManager.textManager.isTyping = true;
 		float alpha = gObject.color.a;
 		Color color = gObject.color;
 		if (positive)
@@ -27,7 +28,7 @@ public class Tools : MonoBehaviour
 			for(float i=0.0f; i<1.0f; i+= Time.deltaTime / timeToAlpha)
 			{
 				gObject.color = new Color(color.r, color.g, color.b, Mathf.Lerp(alpha, 0, i));
-				yield return null;
+				yield return new WaitForSeconds(0.0025f);
 			}
 		}
 		else
@@ -35,12 +36,37 @@ public class Tools : MonoBehaviour
 			for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / timeToAlpha)
 			{
 				gObject.color = new Color(color.r, color.g, color.b, Mathf.Lerp(alpha, 1, i));
-				yield return null;
+				yield return new WaitForSeconds(0.0025f);
 			}
 		}
+		//MainManager.textManager.isTyping = false;
 	}
 
-	
+	public static IEnumerator MakeTransparentText(Text gObject, float timeToAlpha, bool positive)
+	{
+		MainManager.textManager.isTyping = true;
+		float alpha = gObject.color.a;
+		Color color = gObject.color;
+		if (positive)
+		{
+			for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / timeToAlpha)
+			{
+				gObject.color = new Color(color.r, color.g, color.b, Mathf.Lerp(alpha, 0, i));
+				yield return new WaitForSeconds(0.0025f);
+			}
+		}
+		else
+		{
+			for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / timeToAlpha)
+			{
+				gObject.color = new Color(color.r, color.g, color.b, Mathf.Lerp(alpha, 1, i));
+				yield return new WaitForSeconds(0.0025f);
+			}
+		}
+		//MainManager.textManager.isTyping = false;
+	}
+
+
 
 	public static IEnumerator printByLetter(string text, Text ob)
 	{
@@ -48,17 +74,17 @@ public class Tools : MonoBehaviour
 		MainManager.textManager.isTyping = true;
 		ob.text = "";
 		string[] textSplited = text.Split(' ');
+		//ob.text = textSplited[0];
 		foreach (string c in textSplited)
-		{
-			
-				ob.text += c;
-			ob.text += ' ';
-			yield return new WaitForSeconds(0.025f);
+		{			
+			ob.text += c;
+			ob.text += " ";
+			yield return new WaitForSeconds(0.03f);
 		}
-		yield return new WaitForFixedUpdate();
+		//yield return new WaitForFixedUpdate();
 		MainManager.textManager.replicaText.text = MainManager.scene1Text.GetReplica().replica;
-		MainManager.textManager.skipTyping = false;
 		MainManager.textManager.isTyping = false;
+		
 	}
 
 }

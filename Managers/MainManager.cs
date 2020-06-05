@@ -28,10 +28,20 @@ public class MainManager : ScriptableObject , IManager
         {
             i.Initialize();
         }
-        bgManager.ChangeBackground(BackgroundManager.backgroundsList[0]);
-
+        
+        BackgroundManager.curBackground = BackgroundManager.backgroundsList[0];
+        bgManager.ChangeBackground();
         SceneManager.sceneLoaded+=OnLevelLoaded;
 
+        int ready=0;
+        while (ready < managers.Count)
+        {
+            foreach(var i in managers)
+            {
+                if (i.status == ManagerStatus.Online)
+                    ready++;
+            }
+        }
         status = ManagerStatus.Online;
        // Debug.Log(Application.persistentDataPath);
 
@@ -43,8 +53,9 @@ public class MainManager : ScriptableObject , IManager
             wardrobeManager.Initialize();
         else
         {
-            bgManager = GameObject.FindObjectOfType<BackgroundManager>();
-            bgManager.Initialize();
+            //     bgManager = GameObject.FindObjectOfType<BackgroundManager>();
+            //   bgManager.Initialize();
+           
             textManager = GameObject.FindObjectOfType<TextManager>();
             textManager.Initialize();
             textManager.OnLevelLoad();

@@ -7,29 +7,54 @@ public class Chapter1Events : MonoBehaviour
 {
     GameObject wardrobe;
     GameObject wardrobeButton;
+    public static bool cmaeraFlyDone = false;
+
+    public void Caw()
+    {
+        StartCoroutine(PlayCaw());
+    }
+
+    IEnumerator PlayCaw()
+    {
+        AudioClip clip = Resources.Load<AudioClip>("Audio/caw");
+        AudioSource.PlayClipAtPoint(clip, transform.position);
+
+        yield return new WaitForSeconds(clip.length + 1f);
+        TapSpace.Next();
+    }
+
     public void Tutorial1()
     {
+       MainManager.textManager.isTyping = true;
         StartCoroutine(Tutorial1(MainManager.textManager.replicaText.text));
     }
 
     public void LoadDream()
     {
-        StartCoroutine(MainManager.loadManager.Fade());
-        StartCoroutine(LoadDreamC());
+        MainManager.textManager.isTyping = true;
+        
+        StartCoroutine(MainManager.loadManager.Fade(LoadDreamC()));
        
     }
 
     IEnumerator LoadDreamC()
     {
-        yield return new WaitForSeconds(1.25f);
-        MainManager.bgManager.ChangeBackground(BackgroundManager.backgroundsList[2]);
+        //StartCoroutine(MainManager.loadManager.Fade());
+        //yield return new WaitForSeconds(1.25f);
+       
+        BackgroundManager.curBackground = BackgroundManager.backgroundsList[2];
+        MainManager.bgManager.ChangeBackground();
         MainManager.bgManager.targetTexture.GetComponent<RectTransform>().offsetMin = new Vector2(-1900, 0);
         MainManager.bgManager.targetTexture.GetComponent<RectTransform>().offsetMax = new Vector2(350, 0);
+
+        while (!MainManager.bgManager.bgVideoPlayer.isPlaying)
+            yield return new WaitForFixedUpdate();
         TapSpace.Next();
     }
 
     public void FlyingCamera()
     {
+        MainManager.textManager.isTyping = true;
         StartCoroutine(FlyCamera());
     }
 
@@ -46,16 +71,21 @@ public class Chapter1Events : MonoBehaviour
             rect.offsetMin = new Vector2(rect.offsetMin.x + 5, rect.offsetMin.y);
             yield return null;
         }
-       
+
+        Chapter1Events.cmaeraFlyDone = true;
+        TapSpace.Next();
+        MainManager.textManager.isTyping = false;
     }
 
     public void Tutorial2()
     {
+        MainManager.textManager.isTyping = true;
         StartCoroutine(Tutorial2(MainManager.textManager.replicaText.text));
     }
 
     public void Initialize()
     {
+        DontDestroyOnLoad(this.gameObject);
         wardrobe = Instantiate(Resources.Load<GameObject>("Prefabs/LidlWardrobe"));
         wardrobe.transform.SetParent(GameObject.Find("Canvas").transform);
        
@@ -73,17 +103,20 @@ public class Chapter1Events : MonoBehaviour
         MainManager.textManager.replicaText.enabled = false;
         MainManager.textManager.textPanel.color = new Color(255, 255, 255, 0);
       
-        GameObject temp = new GameObject();
+       // GameObject temp = new GameObject();
+       
+       // UnityEngine.UI.Image tempS = temp.AddComponent<UnityEngine.UI.Image>();
+      GameObject temp =  Instantiate(Resources.Load<GameObject>("Prefabs/tut1"));
+        UnityEngine.UI.Image tempS = temp.GetComponent<UnityEngine.UI.Image>();
         temp.transform.SetParent(GameObject.Find("Canvas").transform);
-        UnityEngine.UI.Image tempS = temp.AddComponent<UnityEngine.UI.Image>();
-        tempS.sprite = Resources.Load<Sprite>("Tutorial/tut1");
-        tempS.rectTransform.anchorMin = new Vector2(0.02f, 0.5f);
-        tempS.rectTransform.anchorMax = new Vector2(0.98f, 0.5f);
-      
-        tempS.rectTransform.offsetMin = new Vector2(0,0);
-        tempS.rectTransform.offsetMax = new Vector2(0, 400);
+        //   tempS.rectTransform.anchorMin = new Vector2(0.02f, 0.5f);
+        //   tempS.rectTransform.anchorMax = new Vector2(0.98f, 0.5f);
 
-        tempS.rectTransform.anchoredPosition = new Vector2(0, 0);
+          tempS.rectTransform.offsetMin = new Vector2(25,0);
+          tempS.rectTransform.offsetMax = new Vector2(-25, 400);
+
+          tempS.rectTransform.anchoredPosition = new Vector2(0, 0);
+        tempS.rectTransform.localScale = Vector2.one;    
 
         tempS.color = new Color(255, 255, 255, 0.01f);
         float alpha = tempS.color.a;
@@ -99,12 +132,15 @@ public class Chapter1Events : MonoBehaviour
         TapSpace.OnScreenTapped destroy = new TapSpace.OnScreenTapped(() => {
 
             makeTrans = true;
+            MainManager.textManager.isTyping = true;
         });
         TapSpace.OnScreenTappedEvent += destroy;
 
+        MainManager.textManager.isTyping = false;
+
         while (!makeTrans)
             yield return null;
-
+            
         alpha = tempS.color.a;
         color = tempS.color;
 
@@ -118,10 +154,11 @@ public class Chapter1Events : MonoBehaviour
         while (!check)
             yield return null;
         Destroy(temp);
-        TapSpace.OnScreenTappedEvent -= destroy;
+       // TapSpace.OnScreenTappedEvent -= destroy;
         MainManager.textManager.textPanel.enabled = true;
         MainManager.textManager.replicaText.enabled = true;
         MainManager.textManager.replicaText.text = "";
+        MainManager.textManager.isTyping = false;
     }
 
 
@@ -131,18 +168,20 @@ public class Chapter1Events : MonoBehaviour
         MainManager.textManager.replicaText.enabled = false;
         MainManager.textManager.textPanel.color = new Color(255, 255, 255, 0);
 
-        GameObject temp = new GameObject();
+       // GameObject temp = new GameObject();
+       // temp.transform.SetParent(GameObject.Find("Canvas").transform);
+       // UnityEngine.UI.Image tempS = temp.AddComponent<UnityEngine.UI.Image>();
+        GameObject temp = Instantiate(Resources.Load<GameObject>("Prefabs/tut2"));
+        UnityEngine.UI.Image tempS = temp.GetComponent<UnityEngine.UI.Image>();
         temp.transform.SetParent(GameObject.Find("Canvas").transform);
-        UnityEngine.UI.Image tempS = temp.AddComponent<UnityEngine.UI.Image>();
-        tempS.sprite = Resources.Load<Sprite>("Tutorial/tut2");
-        tempS.rectTransform.anchorMin = new Vector2(0.1f, 0.5f);
-        tempS.rectTransform.anchorMax = new Vector2(0.9f, 0.5f);
-        
-        //tempS.rectTransform.position = new Vector2(0,0);
-       
-        tempS.rectTransform.offsetMin = new Vector2(100, 0);
-        tempS.rectTransform.offsetMax = new Vector2(100, 600);
-        tempS.rectTransform.anchoredPosition = new Vector2(0, 0);
+        //  tempS.rectTransform.anchorMin = new Vector2(0.1f, 0.5f);
+        //   tempS.rectTransform.anchorMax = new Vector2(0.9f, 0.5f);
+
+        tempS.rectTransform.anchoredPosition = new Vector2(0,0);
+        tempS.rectTransform.localScale = Vector2.one;
+          tempS.rectTransform.offsetMin = new Vector2(25, 0);
+          tempS.rectTransform.offsetMax = new Vector2(-25, 500);
+         tempS.rectTransform.anchoredPosition = new Vector2(0, 0);
 
         tempS.color = new Color(255, 255, 255, 0.01f);
         float alpha = tempS.color.a;
@@ -158,9 +197,10 @@ public class Chapter1Events : MonoBehaviour
         TapSpace.OnScreenTapped destroy = new TapSpace.OnScreenTapped(() => {
 
             makeTrans = true;
+            MainManager.textManager.isTyping = true;
         });
         TapSpace.OnScreenTappedEvent += destroy;
-
+        MainManager.textManager.isTyping = false;
         while (!makeTrans)
             yield return null;
 
@@ -182,15 +222,20 @@ public class Chapter1Events : MonoBehaviour
         MainManager.textManager.replicaText.enabled = true;
         MainManager.textManager.replicaText.text = "";
         wardrobeButton.SetActive(true);
+        MainManager.textManager.isTyping = false;
     }
 
 
     public void LidlWardrobe()
     {
-        WardrobeAccept.OnScreenTapped += WardrobeClose;
-        wardrobe.SetActive(true);
-        MainManager.wardrobeManager.Initialize();
         MainManager.textManager.isTyping = true;
+        TapSpace.image.raycastTarget = false;
+        LidlWardrobeAccept.OnScreenTapped += WardrobeClose;
+        wardrobe.SetActive(true);
+        RectTransform wbRTransform = wardrobe.GetComponent<RectTransform>();
+        wbRTransform.offsetMin = Vector2.zero;
+        wbRTransform.offsetMax = Vector2.zero;
+        MainManager.wardrobeManager.Initialize();     
     }
 
     private void WardrobeClose()
@@ -198,6 +243,8 @@ public class Chapter1Events : MonoBehaviour
         wardrobe.SetActive(false);
         TapSpace.Next();
         
-        Destroy(wardrobe);       
+        Destroy(wardrobe);
+        TapSpace.image.raycastTarget = true;
+        //MainManager.textManager.isTyping = false;
     }
 }

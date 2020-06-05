@@ -9,10 +9,14 @@ public class LoadManager : MonoBehaviour
     Image loadScreen;
     AsyncOperation loadLevel;
     public bool isLoading;
+    private void Awake()
+    {
+        loadScreen = GameObject.Find("LoadScreen").GetComponent<Image>();
+    }
     private void Start()
     {
         DontDestroyOnLoad(GameObject.Find("LoadingCanvas"));
-        loadScreen = GameObject.Find("LoadScreen").GetComponent<Image>();
+       
        // DontDestroyOnLoad(loadScreen.gameObject);
         DontDestroyOnLoad(this.gameObject);
         //SceneManager.activeSceneChanged += OnSceneChange;
@@ -65,6 +69,7 @@ public class LoadManager : MonoBehaviour
         yield return StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, true));
         loadScreen.enabled = false;
         isLoading = false;
+        StartCoroutine(MainManager.textManager.ShowText(MainManager.scene1Text.GetReplica()));
     }
 
     public void LoadLevelById(int id)
@@ -72,14 +77,14 @@ public class LoadManager : MonoBehaviour
         StartCoroutine(LoadFunc(id));
     }
 
-    public IEnumerator Fade()
+    public IEnumerator Fade(IEnumerator courotine)
     {
         loadScreen.enabled = true;
         yield return StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, false));
 
-       
 
-        yield return new WaitForSeconds(1.5f);
+
+        yield return StartCoroutine(courotine);
 
         yield return StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, true));
         loadScreen.enabled = false;

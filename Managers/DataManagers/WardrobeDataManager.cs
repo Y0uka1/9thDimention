@@ -11,8 +11,8 @@ public class WardrobeDataManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public static string curHaircutID = "Светлые пепельные короткие волосы";
-    public static string curOutfitID = "Повседневный наряд";
+    public static int curHaircutID = 101;
+    public static int curOutfitID = 201;
     static List<int> haircutList;
     public static List<int> outfitList;
 

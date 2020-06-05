@@ -14,6 +14,7 @@ public class WardrobeManager : ScriptableObject
     public int listIndex;
     public List<WardrobeIDDictionary.SpriteDictionary> list;
     WardrobeItemTypeEnum listType = WardrobeItemTypeEnum.Haircut;
+    public event Action itemSwitched;
     // [SerializeField] public static Sprite haircutSprite;
     // [SerializeField] public static Sprite outfitSprite;
     //public ManagerStatus status { get; set; } = ManagerStatus.Offline;
@@ -21,8 +22,9 @@ public class WardrobeManager : ScriptableObject
 
     public void Initialize()
     {
-       // WardrobeDataManager.DataSave();
-       WardrobeDataManager.DataLoad();
+        //WardrobeDataManager.DataSave();
+        TapSpace.image.raycastTarget = false;
+        WardrobeDataManager.DataLoad();
 
         listContent = GameObject.FindGameObjectWithTag("ListContent").GetComponent<Text>();
 
@@ -32,8 +34,8 @@ public class WardrobeManager : ScriptableObject
         list = new List<WardrobeIDDictionary.SpriteDictionary>();
         
         LoadFromSave();
-        listIndex = list.FindIndex(item => item.name == WardrobeDataManager.curHaircutID);
-        listContent.text = WardrobeDataManager.curHaircutID;
+        listIndex = list.FindIndex(item => item.id == WardrobeDataManager.curHaircutID);
+        listContent.text = WardrobeIDDictionary.haircutDictionary[listIndex].name;
          //float quarter = listContent.transform.parent.parent.GetComponent<RectTransform>().rect.width / 3;
          //  quarter = Screen.width / 4;
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -82,13 +84,14 @@ public class WardrobeManager : ScriptableObject
         if (listType == WardrobeItemTypeEnum.Haircut)
         {
             haircut.sprite = Resources.Load<Sprite>(list[listIndex].path);
-            WardrobeDataManager.curHaircutID = list[listIndex].name;
+            WardrobeDataManager.curHaircutID = list[listIndex].id;
         }
         else //(listType == WardrobeItemTypeEnum.Outfit)
         {
             outfit.sprite = Resources.Load<Sprite>(list[listIndex].path);
-            WardrobeDataManager.curOutfitID = list[listIndex].name;
+            WardrobeDataManager.curOutfitID = list[listIndex].id;
         }
+        itemSwitched.Invoke();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -110,13 +113,13 @@ public class WardrobeManager : ScriptableObject
             case WardrobeItemTypeEnum.Haircut:
                 {
                     list = WardrobeIDDictionary.haircutDictionary;
-                    listIndex = list.FindIndex(item => item.name == WardrobeDataManager.curHaircutID);
+                    listIndex = list.FindIndex(item => item.id == WardrobeDataManager.curHaircutID);
                     break;
                 }
             case WardrobeItemTypeEnum.Outfit:
                 {
                     list = WardrobeIDDictionary.outfitDictionary;
-                    listIndex = list.FindIndex(item => item.name == WardrobeDataManager.curOutfitID);
+                    listIndex = list.FindIndex(item => item.id == WardrobeDataManager.curOutfitID);
                     break;
                 }
             case WardrobeItemTypeEnum.Item:

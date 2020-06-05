@@ -18,6 +18,7 @@ public class WardrobeExitButton : MonoBehaviour
         if (MainManager.loadManager.isLoading == false)
         {
             button.interactable = false;
+            TapSpace.image.raycastTarget = true;
             MainManager.loadManager.LoadLevelById(1);
         }
     }

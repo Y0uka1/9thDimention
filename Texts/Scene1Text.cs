@@ -17,7 +17,7 @@ public class Scene1Text : ScriptableObject, IManager
         index = 0;
         ReplicaList = new List<Name_ReplicaStruct>() {
             new Name_ReplicaStruct(CharactersName.StorryTeller, "Мы расскажем вам легенду об одном юноше по имени Хальфсен. Ему предстоит очень важная миссия - спасти народы девяти миров.", TextState.Center,null),
-             new Name_ReplicaStruct(CharactersName.StorryTeller," Не мало препятствий будет на его пути, но мы надеемся, что он справится.", TextState.Center,null),
+             new Name_ReplicaStruct(CharactersName.StorryTeller,"Не мало препятствий будет на его пути, но мы надеемся, что он справится.", TextState.Center,null),
             new Name_ReplicaStruct(CharactersName.StorryTeller,"А пока он спокойно живёт в Мидгарде, мире людей, и не подозревает, что вот-вот начнется его история.", TextState.Center,null),
 
             new Name_ReplicaStruct(CharactersName.StorryTeller,"", TextState.Special, events.Tutorial1),
@@ -32,12 +32,13 @@ public class Scene1Text : ScriptableObject, IManager
 
                new Name_ReplicaStruct(CharactersName.StorryTeller,"", TextState.Special, events.FlyingCamera),
 
-            new Name_ReplicaStruct(CharactersName.Volva,"Если то, что ты говоришь – правда..." , TextState.Right,null, CharacterEmotions.Orange),                                              //Unknow
-            new Name_ReplicaStruct(CharactersName.Unknown_Noa,"Я видел это своими глазами!", TextState.Left,null, CharacterEmotions.LightBlue),                                                        //Unknow
-            new Name_ReplicaStruct(CharactersName.Volva,"Ты отправляешься в Мидгард, чтобы украсть священный свет, соединяющий все миры.", TextState.Right,null,CharacterEmotions.LightBlue), //Unknow
-            new Name_ReplicaStruct(CharactersName.Unknown_Noa, "Бифрёст?", TextState.Left,null, CharacterEmotions.Orange),                                                                            //Unknow
-            new Name_ReplicaStruct(CharactersName.Volva,  "Да, и будешь хранить его столько, сколько понадобится. Ты понял меня, Ноа?.", TextState.Right,null,CharacterEmotions.LightBlue), //Unknow
-            new Name_ReplicaStruct(CharactersName.Noa, "Я...", TextState.Left,null, CharacterEmotions.Orange),
+            new Name_ReplicaStruct(CharactersName.Volva,"Если то, что ты говоришь – правда..." , TextState.Left,null, CharacterEmotions.Orange),                                              //Unknow
+            new Name_ReplicaStruct(CharactersName.Unknown_Noa,"Я видел это своими глазами!", TextState.Right,null, CharacterEmotions.LightBlue),                                                        //Unknow
+            new Name_ReplicaStruct(CharactersName.Volva,"Ты отправляешься в Мидгард, чтобы украсть священный свет, соединяющий все миры.", TextState.Left,null,CharacterEmotions.LightBlue), //Unknow
+            new Name_ReplicaStruct(CharactersName.Unknown_Noa, "Бифрёст?", TextState.Right,null, CharacterEmotions.Orange),                                                                            //Unknow
+            new Name_ReplicaStruct(CharactersName.Volva,  "Да, и будешь хранить его столько, сколько понадобится. Ты понял меня, Ноа?.", TextState.Left,null,CharacterEmotions.LightBlue), //Unknow
+            new Name_ReplicaStruct(CharactersName.Noa, "Я...", TextState.Right,null, CharacterEmotions.Orange),
+            new Name_ReplicaStruct(CharactersName.StorryTeller,"",TextState.Special,events.Caw),
         };
 
         status = ManagerStatus.Online;
@@ -53,7 +54,7 @@ public class Scene1Text : ScriptableObject, IManager
            
         }catch (ArgumentOutOfRangeException)
         {
-            return new Name_ReplicaStruct(CharactersName.StorryTeller, "В коде произошло некоторое дерьмо. Скорее всего закончились реплики\n Error: ArgumentOutOfRangeException", TextState.Center);
+            return new Name_ReplicaStruct(CharactersName.StorryTeller, "Error: ArgumentOutOfRangeException", TextState.Center);
         }
        
         return result;

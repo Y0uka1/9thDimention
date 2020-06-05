@@ -7,8 +7,8 @@ public class WardeobeSaveStruct
 {
     //private const string SAVE_SEPARATOR = "#SAVE-VALUE#";
 
-    [SerializeField] string serializeCurHaircut;
-    [SerializeField] string serializeCurOutfit;
+    [SerializeField] int serializeCurHaircut;
+    [SerializeField] int serializeCurOutfit;
 
 
     WardeobeSaveStruct()
@@ -20,12 +20,20 @@ public class WardeobeSaveStruct
     public static void SaveData()
     { 
         string json = JsonUtility.ToJson(new WardeobeSaveStruct());
-        File.WriteAllText(Application.dataPath + "curWardrobe.txt", json);
+        File.WriteAllText(Application.persistentDataPath + "curWardrobe.txt", json);
     }
 
     public static void LoadData()
     {
-        string json = File.ReadAllText(Application.dataPath + "curWardrobe.txt");
+        string json ="";
+        try
+        {
+            json = File.ReadAllText(Application.persistentDataPath + "curWardrobe.txt");
+        }
+        catch
+        {
+            SaveData();
+        }
         WardeobeSaveStruct temp = new WardeobeSaveStruct();
         JsonUtility.FromJsonOverwrite(json,temp);
         WardrobeDataManager.curHaircutID = temp.serializeCurHaircut;

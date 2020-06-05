@@ -7,21 +7,30 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
 {
     public delegate void OnScreenTapped();
     public static event OnScreenTapped OnScreenTappedEvent;
+    public static UnityEngine.UI.Image image;
+    private void Start()
+    {
+       // DontDestroyOnLoad(this);
+        image = GetComponent<UnityEngine.UI.Image>();
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (MainManager.textManager.gameObject != null)
+
+        if (MainManager.textManager.gameObject != null && !MainManager.loadManager.isLoading)
         {
-            Debug.Log("Tapped");
-            if (!MainManager.textManager.isTyping)
-            {
-                MainManager.scene1Text.index++;
-                OnScreenTappedEvent.Invoke();
-            }
             
-        }
-        else
-        {
-            Debug.Log("NULL");
+
+                if (!MainManager.textManager.isTyping)
+                {
+                    MainManager.textManager.isTyping = true;
+
+                    MainManager.scene1Text.index++;
+                    OnScreenTappedEvent.Invoke();
+                 
+                }
+            
+            
         }
     }
 
@@ -29,17 +38,12 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
     {
         if (MainManager.textManager.gameObject != null)
         {
-            Debug.Log("Tapped");
-            if (!MainManager.textManager.isTyping)
-            {
+
+            
                 MainManager.scene1Text.index++;
                 OnScreenTappedEvent.Invoke();
-            }
+           // MainManager.textManager.isTyping = false;
 
-        }
-        else
-        {
-            Debug.Log("NULL");
         }
     }
 }

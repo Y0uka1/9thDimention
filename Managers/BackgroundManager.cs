@@ -9,17 +9,19 @@ using UnityEngine.SceneManagement;
 public class BackgroundManager : MonoBehaviour, IManager
 {
     public ManagerStatus status { get; set; } = ManagerStatus.Offline;
-    VideoPlayer bgVideoPlayer;
+    public VideoPlayer bgVideoPlayer;
     bool isQHD;
     public RawImage targetTexture;
 
     public static List<string> backgroundsList;
+
+    public static string curBackground;
     public void Initialize()
     {
         DontDestroyOnLoad(this);
         ListInitialize();
         FindVideoAndTexture();
-      //  SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
         if (Screen.height < 2000 && Screen.width < 2000)
         {
             isQHD = false;
@@ -48,28 +50,35 @@ public class BackgroundManager : MonoBehaviour, IManager
         
     }
 
-    public void ChangeBackground(string path)
+    public void ChangeBackground()
     {
-        Debug.Log("Change");
+
         if (isQHD)
-            bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + path + "2K");
+            bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + curBackground + "2K");
         else
-            bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + path + "FULLHD");
+            bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + curBackground + "FULLHD");
         FindVideoAndTexture();
         StartCoroutine(PlayVideo());
 
     }
 
 
-    IEnumerator PlayVideo()
+    public IEnumerator PlayVideo()
     {
+        bgVideoPlayer.Stop();
         bgVideoPlayer.Prepare();
         while (!bgVideoPlayer.isPrepared)
         {
-            yield return new WaitForSeconds(1);
-            break;
+            yield return new WaitForSeconds(0.5f);
         }
+        Debug.Log("prep");
         targetTexture.texture = bgVideoPlayer.texture;
+        if(curBackground=="dream" && Chapter1Events.cmaeraFlyDone==true)
+        {
+            RectTransform rect = targetTexture.GetComponent<RectTransform>();
+            rect.offsetMin = new Vector2(-300, 0);
+            rect.offsetMax = new Vector2(1950, 0);
+        }
         bgVideoPlayer.Play();
     }
 
@@ -84,19 +93,8 @@ public class BackgroundManager : MonoBehaviour, IManager
     }
 
 
-  /*  private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+ private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        Debug.Log("load");
-        FindVideoAndTexture();
-        switch (scene.buildIndex)
-        {
-            case 1:
-                {
-                    
-                    ChangeBackground("prologue");
-                    StartCoroutine(PlayVideo());
-                    break;
-                }
-        }
-    }*/
+        ChangeBackground();
+    }
 }
