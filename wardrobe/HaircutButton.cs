@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System;
+﻿using UnityEngine;
 
 public class HaircutButton : MonoBehaviour
 {
-    Button button;
+    UnityEngine.UI.Button button;
     private void Start()
     {
-        button = GetComponent<Button>();
+        button = GetComponent<UnityEngine.UI.Button>();
         button.onClick.AddListener(OnPointerDown);
     }
 

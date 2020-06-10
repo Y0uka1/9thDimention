@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class WardrobeDataManager : MonoBehaviour
@@ -21,11 +19,13 @@ public class WardrobeDataManager : MonoBehaviour
     {
 
         WardeobeSaveStruct.SaveData();
+        ItemsDataSave.SaveData();
     }
 
     public static void DataLoad()
     {
         WardeobeSaveStruct.LoadData();
+        ItemsDataSave.LoadData();
     }
 
 }

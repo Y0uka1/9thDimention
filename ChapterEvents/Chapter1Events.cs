@@ -1,13 +1,38 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Chapter1Events : MonoBehaviour
 {
     GameObject wardrobe;
     GameObject wardrobeButton;
+    public WardrobeIDDictionary.SpriteDictionary item;
     public static bool cmaeraFlyDone = false;
+
+
+    public void PickTest()
+    {
+        item = new WardrobeIDDictionary.SpriteDictionary("potion-png-5", "potion", 301);
+        CreatePicker();
+    }
+
+    public  void CreatePicker()
+    {
+        GameObject Picker = Instantiate(Resources.Load<GameObject>("Prefabs/Picker"));
+        Picker.transform.SetParent(GameObject.Find("Canvas").transform);
+        Picker.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        Picker.GetComponent<RectTransform>().localScale = Vector3.one;
+
+        Image itemImg = Picker.transform.GetChild(0).GetChild(1).GetComponent<Image>();
+        itemImg.sprite = Resources.Load<Sprite>(item.path);
+        PickerButton button = Picker.GetComponentInChildren<PickerButton>();
+        TapSpace.image.raycastTarget = false;
+        button.Picker = Picker;
+        button.itemImg = itemImg;
+       
+    }
+
+    
 
     public void Caw()
     {
@@ -17,7 +42,9 @@ public class Chapter1Events : MonoBehaviour
     IEnumerator PlayCaw()
     {
         AudioClip clip = Resources.Load<AudioClip>("Audio/caw");
-        AudioSource.PlayClipAtPoint(clip, transform.position);
+        AudioSource soundBuff = GameObject.Find("SoundBuff").GetComponent<AudioSource>();
+        soundBuff.clip = clip;
+        soundBuff.Play();
 
         yield return new WaitForSeconds(clip.length + 1f);
         TapSpace.Next();
@@ -39,9 +66,6 @@ public class Chapter1Events : MonoBehaviour
 
     IEnumerator LoadDreamC()
     {
-        //StartCoroutine(MainManager.loadManager.Fade());
-        //yield return new WaitForSeconds(1.25f);
-       
         BackgroundManager.curBackground = BackgroundManager.backgroundsList[2];
         MainManager.bgManager.ChangeBackground();
         MainManager.bgManager.targetTexture.GetComponent<RectTransform>().offsetMin = new Vector2(-1900, 0);
@@ -95,6 +119,8 @@ public class Chapter1Events : MonoBehaviour
 
         wardrobeButton = GameObject.Find("WardrobeButton");
         wardrobeButton.SetActive(false);
+
+       
     }
 
     IEnumerator Tutorial1(string text)
@@ -102,15 +128,10 @@ public class Chapter1Events : MonoBehaviour
         MainManager.textManager.textPanel.enabled = false;
         MainManager.textManager.replicaText.enabled = false;
         MainManager.textManager.textPanel.color = new Color(255, 255, 255, 0);
-      
-       // GameObject temp = new GameObject();
-       
-       // UnityEngine.UI.Image tempS = temp.AddComponent<UnityEngine.UI.Image>();
+
       GameObject temp =  Instantiate(Resources.Load<GameObject>("Prefabs/tut1"));
         UnityEngine.UI.Image tempS = temp.GetComponent<UnityEngine.UI.Image>();
         temp.transform.SetParent(GameObject.Find("Canvas").transform);
-        //   tempS.rectTransform.anchorMin = new Vector2(0.02f, 0.5f);
-        //   tempS.rectTransform.anchorMax = new Vector2(0.98f, 0.5f);
 
           tempS.rectTransform.offsetMin = new Vector2(25,0);
           tempS.rectTransform.offsetMax = new Vector2(-25, 400);
@@ -154,7 +175,6 @@ public class Chapter1Events : MonoBehaviour
         while (!check)
             yield return null;
         Destroy(temp);
-       // TapSpace.OnScreenTappedEvent -= destroy;
         MainManager.textManager.textPanel.enabled = true;
         MainManager.textManager.replicaText.enabled = true;
         MainManager.textManager.replicaText.text = "";
@@ -168,14 +188,10 @@ public class Chapter1Events : MonoBehaviour
         MainManager.textManager.replicaText.enabled = false;
         MainManager.textManager.textPanel.color = new Color(255, 255, 255, 0);
 
-       // GameObject temp = new GameObject();
-       // temp.transform.SetParent(GameObject.Find("Canvas").transform);
-       // UnityEngine.UI.Image tempS = temp.AddComponent<UnityEngine.UI.Image>();
         GameObject temp = Instantiate(Resources.Load<GameObject>("Prefabs/tut2"));
         UnityEngine.UI.Image tempS = temp.GetComponent<UnityEngine.UI.Image>();
         temp.transform.SetParent(GameObject.Find("Canvas").transform);
-        //  tempS.rectTransform.anchorMin = new Vector2(0.1f, 0.5f);
-        //   tempS.rectTransform.anchorMax = new Vector2(0.9f, 0.5f);
+
 
         tempS.rectTransform.anchoredPosition = new Vector2(0,0);
         tempS.rectTransform.localScale = Vector2.one;
@@ -245,6 +261,5 @@ public class Chapter1Events : MonoBehaviour
         
         Destroy(wardrobe);
         TapSpace.image.raycastTarget = true;
-        //MainManager.textManager.isTyping = false;
     }
 }

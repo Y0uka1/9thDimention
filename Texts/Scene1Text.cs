@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -8,7 +7,7 @@ public class Scene1Text : ScriptableObject, IManager
     public ManagerStatus status { get; set; } = ManagerStatus.Offline;
     public  List<Name_ReplicaStruct> ReplicaList;
   [SerializeField]  public   int index;
-    Chapter1Events events;
+    public Chapter1Events events;
 
     public void Initialize()
     {
@@ -39,6 +38,7 @@ public class Scene1Text : ScriptableObject, IManager
             new Name_ReplicaStruct(CharactersName.Volva,  "Да, и будешь хранить его столько, сколько понадобится. Ты понял меня, Ноа?.", TextState.Left,null,CharacterEmotions.LightBlue), //Unknow
             new Name_ReplicaStruct(CharactersName.Noa, "Я...", TextState.Right,null, CharacterEmotions.Orange),
             new Name_ReplicaStruct(CharactersName.StorryTeller,"",TextState.Special,events.Caw),
+            new Name_ReplicaStruct(CharactersName.StorryTeller,"",TextState.Special,events.PickTest),
         };
 
         status = ManagerStatus.Online;

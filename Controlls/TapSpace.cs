@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TapSpace : MonoBehaviour, IPointerDownHandler
@@ -10,7 +8,6 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
     public static UnityEngine.UI.Image image;
     private void Start()
     {
-       // DontDestroyOnLoad(this);
         image = GetComponent<UnityEngine.UI.Image>();
     }
 
@@ -29,8 +26,6 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
                     OnScreenTappedEvent.Invoke();
                  
                 }
-            
-            
         }
     }
 
@@ -38,12 +33,8 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
     {
         if (MainManager.textManager.gameObject != null)
         {
-
-            
                 MainManager.scene1Text.index++;
                 OnScreenTappedEvent.Invoke();
-           // MainManager.textManager.isTyping = false;
-
         }
     }
 }

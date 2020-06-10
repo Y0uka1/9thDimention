@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 
 public class WardeobeSaveStruct
 {
-    //private const string SAVE_SEPARATOR = "#SAVE-VALUE#";
 
     [SerializeField] int serializeCurHaircut;
     [SerializeField] int serializeCurOutfit;

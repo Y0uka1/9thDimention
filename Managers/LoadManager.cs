@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -15,12 +14,8 @@ public class LoadManager : MonoBehaviour
     }
     private void Start()
     {
-        DontDestroyOnLoad(GameObject.Find("LoadingCanvas"));
-       
-       // DontDestroyOnLoad(loadScreen.gameObject);
+        DontDestroyOnLoad(GameObject.Find("LoadingCanvas"));      
         DontDestroyOnLoad(this.gameObject);
-        //SceneManager.activeSceneChanged += OnSceneChange;
-       // SceneManager.sceneLoaded += OnSceneLoaded;
         StartCoroutine(FirstLoadFunc());
     }
 
@@ -33,8 +28,6 @@ public class LoadManager : MonoBehaviour
             yield return null;
 
         MainManager mainManager = ScriptableObject.CreateInstance(typeof(MainManager)) as MainManager;
-        //MainManager mainManager = Instantiate(Resources.Load<GameObject>("Manager")).GetComponent<MainManager>();
-        //DontDestroyOnLoad(mainManager.gameObject);
         mainManager.Initialize();
         while (mainManager.status != ManagerStatus.Online)
         {
@@ -81,8 +74,6 @@ public class LoadManager : MonoBehaviour
     {
         loadScreen.enabled = true;
         yield return StartCoroutine(Tools.MakeTransparent(loadScreen, 1f, false));
-
-
 
         yield return StartCoroutine(courotine);
 

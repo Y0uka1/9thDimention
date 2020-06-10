@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class WardrobeIDDictionary
@@ -41,6 +40,11 @@ public class WardrobeIDDictionary
         new SpriteDictionary("Wardrobe/Outfit/outfit_1","Классический наряд",201),
         new SpriteDictionary("Wardrobe/Outfit/outfit_2","Повседневный наряд",202),
         new SpriteDictionary("Wardrobe/Outfit/outfit_3","Небрежный наряд",203),
+    };
+
+    public static List<SpriteDictionary> itemDictionary = new List<SpriteDictionary>()
+    {
+         
     };
 
     public  static string GetPathByName(int id, WardrobeItemTypeEnum type)

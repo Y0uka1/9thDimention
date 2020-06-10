@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+
+
 
 public class WardrobeExitButton : MonoBehaviour
 {
-    Button button;
+    UnityEngine.UI.Button button;
     void Start()
     {
-        button = GetComponent<Button>();
+        button = GetComponent<UnityEngine.UI.Button>();
         button.onClick.AddListener(OnClick);
     }
 

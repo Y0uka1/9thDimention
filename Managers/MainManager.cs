@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,13 +16,11 @@ public class MainManager : ScriptableObject , IManager
     public void Initialize()
     {
         List<IManager> managers = new List<IManager>();
-        managers.Add(scene1Text = CreateInstance(typeof(Scene1Text)) as Scene1Text/*= GetComponent<Scene1Text>()*/);
+        managers.Add(scene1Text = CreateInstance(typeof(Scene1Text)) as Scene1Text);
         managers.Add(bgManager = GameObject.FindObjectOfType<BackgroundManager>());
         managers.Add(textManager = GameObject.FindObjectOfType<TextManager>());
-        //wardrobeManager = GameObject.FindObjectOfType<WardrobeManager>();
         wardrobeManager = CreateInstance(typeof(WardrobeManager)) as WardrobeManager;
         loadManager = FindObjectOfType<LoadManager>();
-        //scene1Text.Initialize();
         foreach (var i in managers)
         {
             i.Initialize();
@@ -43,7 +40,6 @@ public class MainManager : ScriptableObject , IManager
             }
         }
         status = ManagerStatus.Online;
-       // Debug.Log(Application.persistentDataPath);
 
     }
 
@@ -53,9 +49,7 @@ public class MainManager : ScriptableObject , IManager
             wardrobeManager.Initialize();
         else
         {
-            //     bgManager = GameObject.FindObjectOfType<BackgroundManager>();
-            //   bgManager.Initialize();
-           
+
             textManager = GameObject.FindObjectOfType<TextManager>();
             textManager.Initialize();
             textManager.OnLevelLoad();

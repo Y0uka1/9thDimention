@@ -33,7 +33,7 @@ public class BackgroundManager : MonoBehaviour, IManager
             MainManager.biggerText = true;
         }
         StartCoroutine(PlayVideo());
-        status = ManagerStatus.Online;
+        
     }
 
     private void FindVideoAndTexture()
@@ -56,7 +56,7 @@ public class BackgroundManager : MonoBehaviour, IManager
         if (isQHD)
             bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + curBackground + "2K");
         else
-            bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + curBackground + "FULLHD");
+            bgVideoPlayer.clip = Resources.Load<VideoClip>("Videos/Background/" + curBackground + "2K");
         FindVideoAndTexture();
         StartCoroutine(PlayVideo());
 
@@ -69,7 +69,7 @@ public class BackgroundManager : MonoBehaviour, IManager
         bgVideoPlayer.Prepare();
         while (!bgVideoPlayer.isPrepared)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
         }
         Debug.Log("prep");
         targetTexture.texture = bgVideoPlayer.texture;
@@ -80,6 +80,8 @@ public class BackgroundManager : MonoBehaviour, IManager
             rect.offsetMax = new Vector2(1950, 0);
         }
         bgVideoPlayer.Play();
+        yield return new WaitForSeconds(0.5f);
+        status = ManagerStatus.Online;
     }
 
     public void ListInitialize()

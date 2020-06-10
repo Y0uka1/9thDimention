@@ -1,10 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Tools : MonoBehaviour
 {
+
+	
+
    public static void MoveToPosition(GameObject otm, Vector3 position, float timeToMove)
 	{
 		var currentPos = otm.transform.position;
