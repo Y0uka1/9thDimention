@@ -65,21 +65,25 @@ public class BackgroundManager : MonoBehaviour, IManager
 
     public IEnumerator PlayVideo()
     {
+        
         bgVideoPlayer.Stop();
         bgVideoPlayer.Prepare();
+        
         while (!bgVideoPlayer.isPrepared)
         {
             yield return new WaitForSeconds(0.25f);
         }
         Debug.Log("prep");
-        targetTexture.texture = bgVideoPlayer.texture;
+      
         if(curBackground=="dream" && Chapter1Events.cmaeraFlyDone==true)
         {
             RectTransform rect = targetTexture.GetComponent<RectTransform>();
             rect.offsetMin = new Vector2(-300, 0);
             rect.offsetMax = new Vector2(1950, 0);
         }
+        targetTexture.texture = bgVideoPlayer.texture;
         bgVideoPlayer.Play();
+        
         yield return new WaitForSeconds(0.5f);
         status = ManagerStatus.Online;
     }

@@ -10,6 +10,9 @@ public class PickerButton : MonoBehaviour
     AudioSource soundBuff;
     public GameObject Picker;
     public Image itemImg;
+
+    public WardrobeIDDictionary.SpriteDictionary item;
+
     void Start()
     {
         button = GetComponent<Button>();
@@ -36,9 +39,10 @@ public class PickerButton : MonoBehaviour
     IEnumerator PlaySound()
     {
         soundBuff.Play();
-        WardrobeIDDictionary.itemDictionary.Add(MainManager.scene1Text.events.item);
+        WardrobeIDDictionary.itemDictionary.Add(item);
         yield return StartCoroutine(Clicked());
         //new WaitForSeconds(soundBuff.clip.length + 0.1f);
+        TapSpace.image.raycastTarget = true;
         TapSpace.Next();
         
     }

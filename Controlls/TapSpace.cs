@@ -13,7 +13,6 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-
         if (MainManager.textManager.gameObject != null && !MainManager.loadManager.isLoading)
         {
             
@@ -33,7 +32,7 @@ public class TapSpace : MonoBehaviour, IPointerDownHandler
     {
         if (MainManager.textManager.gameObject != null)
         {
-                MainManager.scene1Text.index++;
+            MainManager.scene1Text.index++;
                 OnScreenTappedEvent.Invoke();
         }
     }

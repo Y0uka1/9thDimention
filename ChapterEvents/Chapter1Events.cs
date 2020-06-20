@@ -1,38 +1,34 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Chapter1Events : MonoBehaviour
 {
     GameObject wardrobe;
     GameObject wardrobeButton;
-    public WardrobeIDDictionary.SpriteDictionary item;
+    
     public static bool cmaeraFlyDone = false;
 
 
+    public void ChoiseTest()
+    {
+        MainManager.reputationManager.Choise(
+            2,
+            "Test",
+            new ChoiseType[2] { ChoiseType.Free, ChoiseType.Paid },
+             new UnityAction[2] { () => { StartCoroutine(MainManager.reputationManager.Reputation(ReputationType.Personal, "sldkla;dk;asd")); },
+                 () => { StartCoroutine(MainManager.reputationManager.Reputation(ReputationType.Bad, "sldkla;dk;asd")); } },
+             new string[2] {"1","2"}
+            ) ;
+    }
+
     public void PickTest()
     {
-        item = new WardrobeIDDictionary.SpriteDictionary("potion-png-5", "potion", 301);
-        CreatePicker();
+        MainManager.reputationManager.CreatePicker(new WardrobeIDDictionary.SpriteDictionary("potion-png-5", "potion", 301));
     }
 
-    public  void CreatePicker()
-    {
-        GameObject Picker = Instantiate(Resources.Load<GameObject>("Prefabs/Picker"));
-        Picker.transform.SetParent(GameObject.Find("Canvas").transform);
-        Picker.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        Picker.GetComponent<RectTransform>().localScale = Vector3.one;
 
-        Image itemImg = Picker.transform.GetChild(0).GetChild(1).GetComponent<Image>();
-        itemImg.sprite = Resources.Load<Sprite>(item.path);
-        PickerButton button = Picker.GetComponentInChildren<PickerButton>();
-        TapSpace.image.raycastTarget = false;
-        button.Picker = Picker;
-        button.itemImg = itemImg;
-       
-    }
-
-    
 
     public void Caw()
     {
@@ -91,8 +87,8 @@ public class Chapter1Events : MonoBehaviour
        
         while (rect.offsetMin.x<-300 && rect.offsetMax.x<1950)
         {
-            rect.offsetMax = new Vector2(rect.offsetMax.x + 5, rect.offsetMax.y);
-            rect.offsetMin = new Vector2(rect.offsetMin.x + 5, rect.offsetMin.y);
+            rect.offsetMax = new Vector2(rect.offsetMax.x + (800*Time.deltaTime), rect.offsetMax.y);
+            rect.offsetMin = new Vector2(rect.offsetMin.x + (800 * Time.deltaTime), rect.offsetMin.y);
             yield return null;
         }
 
@@ -262,4 +258,5 @@ public class Chapter1Events : MonoBehaviour
         Destroy(wardrobe);
         TapSpace.image.raycastTarget = true;
     }
+
 }

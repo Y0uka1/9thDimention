@@ -74,13 +74,17 @@ public class TextManager : MonoBehaviour, IManager
             }
 
             string path;
-            if (text.replica.Length < 58)
+            if (text.replica.Length >140)
             {
-                path = "Small";
+                path = "";
+            }
+            else if (text.replica.Length <= 140 && text.replica.Length > 53)
+            {
+                path = "Medium";
             }
             else
             {
-                path = "";
+                path = "Small";
             }
 
             switch (text.state)
@@ -101,7 +105,7 @@ public class TextManager : MonoBehaviour, IManager
                         charName = textPanel.transform.GetChild(1).GetComponent<Text>();
                         replicaText = textPanel.transform.GetChild(0).GetComponent<Text>();
                         charName.text = text.NameToString(text.name);
-                        characterImg.rectTransform.anchoredPosition = new Vector2(-55, 0);
+                        characterImg.rectTransform.anchoredPosition = new Vector2(-65, 150);
                         characterImg.enabled = true;
                         StartCoroutine(FlyCamera(2));
                         break;
@@ -112,7 +116,7 @@ public class TextManager : MonoBehaviour, IManager
                         charName = textPanel.transform.GetChild(1).GetComponent<Text>();
                         replicaText = textPanel.transform.GetChild(0).GetComponent<Text>();
                         charName.text = text.NameToString(text.name);
-                        characterImg.rectTransform.anchoredPosition = new Vector2(155, 0);
+                        characterImg.rectTransform.anchoredPosition = new Vector2(300, 150);
                         characterImg.enabled = true;
                         StartCoroutine(FlyCamera(1));
                         break;
@@ -161,20 +165,20 @@ public class TextManager : MonoBehaviour, IManager
 
         if (state == 1)
         {
-            float newPos = rect.offsetMin.x - 200; 
+            float newPos = rect.offsetMin.x - 75; 
             while (rect.offsetMin.x > newPos)
             {
-                rect.offsetMax = new Vector2(rect.offsetMax.x - 5, rect.offsetMax.y);
-                rect.offsetMin = new Vector2(rect.offsetMin.x - 5, rect.offsetMin.y);
+                rect.offsetMax = new Vector2(rect.offsetMax.x - (1000 * Time.deltaTime), rect.offsetMax.y);
+                rect.offsetMin = new Vector2(rect.offsetMin.x - (1000 * Time.deltaTime), rect.offsetMin.y);
                 yield return null;
             }      
         }else if (state == 2)
         {
-            float newPos = rect.offsetMin.x + 200;
+            float newPos = rect.offsetMin.x + 75;
             while (rect.offsetMin.x < newPos)
             {
-                rect.offsetMax = new Vector2(rect.offsetMax.x + 5, rect.offsetMax.y);
-                rect.offsetMin = new Vector2(rect.offsetMin.x + 5, rect.offsetMin.y);
+                rect.offsetMax = new Vector2(rect.offsetMax.x + (1000 * Time.deltaTime), rect.offsetMax.y);
+                rect.offsetMin = new Vector2(rect.offsetMin.x + (1000 * Time.deltaTime), rect.offsetMin.y);
                 yield return null;
             }
         }

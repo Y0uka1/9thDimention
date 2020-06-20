@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Tools : MonoBehaviour
 {
-
-	
 
    public static void MoveToPosition(GameObject otm, Vector3 position, float timeToMove)
 	{
@@ -88,5 +88,9 @@ public class Tools : MonoBehaviour
 		MainManager.textManager.isTyping = false;
 		
 	}
+
+
+	
+
 
 }

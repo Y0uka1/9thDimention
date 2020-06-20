@@ -15,6 +15,7 @@ public class Scene1Text : ScriptableObject, IManager
         events.Initialize();
         index = 0;
         ReplicaList = new List<Name_ReplicaStruct>() {
+            new Name_ReplicaStruct(CharactersName.Volva,"",TextState.Special, events.ChoiseTest),
             new Name_ReplicaStruct(CharactersName.StorryTeller, "Мы расскажем вам легенду об одном юноше по имени Хальфсен. Ему предстоит очень важная миссия - спасти народы девяти миров.", TextState.Center,null),
              new Name_ReplicaStruct(CharactersName.StorryTeller,"Не мало препятствий будет на его пути, но мы надеемся, что он справится.", TextState.Center,null),
             new Name_ReplicaStruct(CharactersName.StorryTeller,"А пока он спокойно живёт в Мидгарде, мире людей, и не подозревает, что вот-вот начнется его история.", TextState.Center,null),

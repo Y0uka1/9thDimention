@@ -12,6 +12,8 @@ public class MainManager : ScriptableObject , IManager
     public static WardrobeManager wardrobeManager;
     public static bool biggerText;
     public static LoadManager loadManager;
+    public static RelationsData relationsData;
+    public static ReputationManager reputationManager;
 
     public void Initialize()
     {
@@ -19,16 +21,22 @@ public class MainManager : ScriptableObject , IManager
         managers.Add(scene1Text = CreateInstance(typeof(Scene1Text)) as Scene1Text);
         managers.Add(bgManager = GameObject.FindObjectOfType<BackgroundManager>());
         managers.Add(textManager = GameObject.FindObjectOfType<TextManager>());
+        
         wardrobeManager = CreateInstance(typeof(WardrobeManager)) as WardrobeManager;
         loadManager = FindObjectOfType<LoadManager>();
         foreach (var i in managers)
         {
             i.Initialize();
         }
-        
+
+        reputationManager = GameObject.FindObjectOfType<ReputationManager>();
+
         BackgroundManager.curBackground = BackgroundManager.backgroundsList[0];
         bgManager.ChangeBackground();
         SceneManager.sceneLoaded+=OnLevelLoaded;
+
+        relationsData = new RelationsData();
+        RelationsData.LoadData();
 
         int ready=0;
         while (ready < managers.Count)
